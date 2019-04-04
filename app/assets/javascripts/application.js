@@ -15,6 +15,8 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require turbolinks
+//= require plupload/js/moxie
+//= require plupload/js/plupload.dev
 //= require common
 //= require bootstrap
 //= require admin-lte
@@ -64,6 +66,11 @@ function show_file(e){
         $('#file-modal-body').html("<iframe src='/pdfjs-2.0.943-dist/web/viewer.html?file=" + url + "' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>");
     }else if(['png', 'jpg', 'jepg', 'gif', 'bmp'].indexOf(ext) >= 0){
         $('#file-modal-body').html("<div style='text-align:center;'><image style='max-width:90%' src='"+ url + "'></image></div>");
+    }else if(['dwg'].indexOf(ext) >= 0) {
+        // $('#file-modal-body').html("<iframe src='" + url + "' width='100%' height='100%' frameborder='1'>\n");
+        //window.open("https://sharecad.org/cadframe/load?url=" + url);
+        //return;
+        $('#file-modal-body').html("<iframe src='//sharecad.org/cadframe/load?url=" + url + "' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>");
     }
     $('#file-modal').modal();
 }

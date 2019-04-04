@@ -97,7 +97,7 @@ $(function () {
     // });
 
     // The Calender
-    $('#calendar').datepicker();
+    // $('#calendar').datepicker();
 
     // SLIMSCROLL FOR CHAT WIDGET
     $('#chat-box').slimScroll({

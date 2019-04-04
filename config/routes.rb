@@ -82,5 +82,11 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  resources :products
+  resources :products do
+    member do
+      get :show_version
+      get :upload_file
+      patch :do_upload_file
+    end
+  end
 end

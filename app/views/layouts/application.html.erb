@@ -4,14 +4,14 @@
 <%= render 'layouts/head' %>
 <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
 
-<body class="hold-transition sidebar-mini skin-blue">
+<body class="hold-transition sidebar-mini skin-blue" style="min-height: 100%;">
 
 <div class="wrapper">
     <%= render 'layouts/navbar' %>
     <%= render 'layouts/sidebar' %>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" >
+  <div class="content-wrapper" style="min-height: 648px;" >
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <%= yield(:content_header) %>

@@ -61,6 +61,7 @@ gem 'mysql2', '~> 0.4.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'aasm'                                                    # 状态管理
+gem 'bower-rails', '~> 0.10.0'                                # node 包管理
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

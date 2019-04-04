@@ -13,4 +13,15 @@
 #
 
 class ProductLog < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :product
+
+
+  def preview_url
+    Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
+  end
+
+  def get_status
+    self.status
+  end
 end

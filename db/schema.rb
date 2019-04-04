@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190404022925) do
+ActiveRecord::Schema.define(version: 20190404082347) do
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value",      limit: 255
@@ -34,21 +34,23 @@ ActiveRecord::Schema.define(version: 20190404022925) do
     t.string   "status",     limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.datetime "active_at"
   end
 
   create_table "products", force: :cascade do |t|
-    t.integer  "category_id",  limit: 4
-    t.string   "name",         limit: 255
-    t.string   "product_no",   limit: 255
-    t.string   "color",        limit: 255
-    t.string   "norms",        limit: 255
-    t.string   "file_name",    limit: 255
-    t.string   "file_path",    limit: 255
-    t.text     "desc",         limit: 65535
-    t.integer  "user_id",      limit: 4
-    t.integer  "last_user_id", limit: 4
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "category_id",     limit: 4
+    t.string   "name",            limit: 255
+    t.string   "product_no",      limit: 255
+    t.string   "color",           limit: 255
+    t.string   "norms",           limit: 255
+    t.string   "file_name",       limit: 255
+    t.string   "file_path",       limit: 255
+    t.text     "desc",            limit: 65535
+    t.integer  "user_id",         limit: 4
+    t.integer  "last_user_id",    limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.datetime "last_updated_at"
   end
 
   create_table "resources", force: :cascade do |t|
