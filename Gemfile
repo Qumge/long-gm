@@ -60,6 +60,7 @@ gem 'vestal_versions', :git => 'git://github.com/laserlemon/vestal_versions' #�
 gem 'mysql2', '~> 0.4.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'momentjs-rails', '>= 2.9.0'
+gem 'aasm'                                                    # 状态管理
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -70,5 +71,11 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+end
+
+group :development, :test do
+  gem 'byebug'              # Byebug is a Ruby 2 debugger.
+  gem 'annotate'
+  gem 'mina',                           '0.3.8'
 end
 
