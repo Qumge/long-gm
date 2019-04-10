@@ -22,10 +22,13 @@
                   <td><%= version.reify.norms %></td>
                   <td><%= version.reify&.user&.name %></td>
                   <td>
-                    <% if version.reify.file_path.present? %>
+                    <% if version.reify.file_path.present? && current_user.products.include?(@product) %>
                     <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= version.reify.preview_url%>" data-file-name="<%= version.reify.file_name %>">
                       <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  version.reify %>
                     </a>
+                      <%= link_to version.reify.preview_url, class: 'btn' do  %>
+                        <i class="fa fa-download"></i>
+                      <% end %>
                     <% end %>
                   </td>
                 </tr>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190409024206) do
+ActiveRecord::Schema.define(version: 20190410014626) do
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value",      limit: 255
@@ -52,6 +52,13 @@ ActiveRecord::Schema.define(version: 20190409024206) do
     t.datetime "updated_at",                    null: false
   end
 
+  create_table "instances_users", force: :cascade do |t|
+    t.integer  "instance_id", limit: 4
+    t.integer  "user_id",     limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
   create_table "product_logs", force: :cascade do |t|
     t.integer  "product_id", limit: 4
     t.string   "file_name",  limit: 255
@@ -84,6 +91,13 @@ ActiveRecord::Schema.define(version: 20190409024206) do
     t.integer  "instance_id", limit: 4
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+  end
+
+  create_table "products_users", force: :cascade do |t|
+    t.integer  "product_id", limit: 4
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "resources", force: :cascade do |t|

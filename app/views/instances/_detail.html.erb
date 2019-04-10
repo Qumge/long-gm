@@ -18,6 +18,23 @@
         <th>备注</th>
         <td><%= @instance.desc %></td>
       </tr>
+      <tr>
+        <th>
+          图纸
+        </th>
+        <td>
+          <% if @instance.file_path.present? && current_user.products.include?(@instance)%>
+            <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @instance.preview_url%>" data-file-name="<%= @instance.file_name %>">
+              <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  @instance %>
+            </a>
+            <%= link_to @instance.preview_url, class: 'btn' do  %>
+              <i class="fa fa-download"></i>
+            <% end %>
+          <% else %>
+            <%= @instance.file_name %>
+          <% end %>
+        </td>
+      </tr>
 
       </tbody>
     </table>
@@ -40,6 +57,14 @@
       <tr>
         <th>图纸变更时间</th>
         <td><%= simple_time @instance.last_updated_at %></td>
+      </tr>
+      <tr>
+        <th>图纸可见人员</th>
+        <td>
+          <% @instance.users.each do |user| %>
+            <span class="label label-primary " style="padding-bottom: 2px;padding-top: 2px;"><%= user.name %></span>
+          <% end %>
+        </td>
       </tr>
       </tbody>
     </table>

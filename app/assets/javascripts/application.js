@@ -71,6 +71,10 @@ function show_file(e){
         //window.open("https://sharecad.org/cadframe/load?url=" + url);
         //return;
         $('#file-modal-body').html("<iframe src='//sharecad.org/cadframe/load?url=" + url + "' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>");
+    }else{
+        alert('该文件格式暂时不支持在线预览，点击确定后直接下载文件。');
+        location.href = url;
+        return;
     }
     $('#file-modal').modal();
 }

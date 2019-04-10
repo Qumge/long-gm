@@ -17,15 +17,24 @@
               <% @product.versions.each do |version| %>
               <% if version.reify.present? %>
                 <tr>
-                  <td><%= link_to version.reify.product_no, show_version_product_path(version.reify, version_id: version.id), 'data-toggle' => "modal", 'data-target' => "#global-modal" %></td>
+                  <td>
+                    <% if can? :show_version, :products %>
+                    <%= link_to version.reify.product_no, show_version_product_path(version.reify, version_id: version.id), 'data-toggle' => "modal", 'data-target' => "#global-modal" %>
+                      <%else %>
+                    <%= version.reify.product_no %>
+                    <% end %>
+                  </td>
                   <td><%= version.reify.name %></td>
                   <td><%= version.reify.norms %></td>
                   <td><%= version.reify&.user&.name %></td>
                   <td>
-                    <% if version.reify.file_path.present? %>
+                    <% if version.reify.file_path.present? && current_user.products.include?(@product) %>
                     <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= version.reify.preview_url%>" data-file-name="<%= version.reify.file_name %>">
                       <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  version.reify %>
                     </a>
+                      <%= link_to version.reify.preview_url, class: 'btn' do  %>
+                        <i class="fa fa-download"></i>
+                      <% end %>
                     <% end %>
                   </td>
                 </tr>

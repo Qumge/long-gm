@@ -54,7 +54,7 @@ class InstancesController < ApplicationController
   private
 
   def instance_permit
-    params.require('instance').permit(:instance_no, :name, :norms, :desc)
+    params.require('instance').permit(:instance_no, :name, :norms, :desc, user_ids: [])
   end
 
   def set_instance

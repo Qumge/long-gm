@@ -9,7 +9,7 @@
       <%= f.input :name%>
       <%= f.input :norms %>
       <%= f.input :desc %>
-
+      <%= f.input :user_ids, collection: User.all.collect{|user| [user.name, user.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%', multiple: "multiple" }, 'data-placeholder': "多选、 可输入文字检索"%>
     </div>
   <% end %>
 
@@ -37,7 +37,8 @@
                 }
             });
 
-        })
+        });
+        $('.select2').select2();
     });
 </script>
 

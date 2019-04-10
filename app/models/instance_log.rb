@@ -10,4 +10,5 @@ class InstanceLog < ActiveRecord::Base
   def get_status
     self.status
   end
+
 end

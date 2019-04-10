@@ -13,14 +13,17 @@
             <th>生效时间</th>
           </tr>
           <tr>
-            <% if @product.product_logs.order('product_logs.updated_at desc').present? %>
-              <% @product.product_logs.order('product_logs.updated_at desc').each do |product_log| %>
+            <% if @product.view_logs(current_user).order('product_logs.updated_at desc').present? %>
+              <% @product.view_logs(current_user).order('product_logs.updated_at desc').each do |product_log| %>
                 <tr>
                   <td>
                     <% if product_log.file_path.present? %>
                       <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= product_log.preview_url%>" data-file-name="<%= product_log.file_name %>">
                         <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  product_log %>
                       </a>
+                      <%= link_to product_log.preview_url, class: 'btn' do  %>
+                        <i class="fa fa-download"></i>
+                      <% end %>
                       <% else %>
                       <%= product_log.file_name %>
                     <% end %>

@@ -38,7 +38,12 @@
             <% if instances.present? %>
               <% instances.each do |instance| %>
               <tr>
-                <td><%= link_to instance.instance_no, instance_path(instance) %></td>
+                <td>
+                  <% if can? :show, :instances %>
+                  <%= link_to instance.instance_no, instance_path(instance) %></td>
+                    <% else %>
+                  <%=instance.instance_no %>
+                    <% end %>
                 <td><%= instance.name %></td>
                 <td><%= instance.norms %></td>
                 <td><%= instance.user&.name %></td>

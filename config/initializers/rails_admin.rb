@@ -13,7 +13,7 @@ RailsAdmin.config do |config|
     # warden.authenticate! scope: :user
     redirect_to main_app.root_path, alert: '无权限' unless current_user.present? && current_user.has_role?('super_admin')
   end
-  config.main_app_name = ["龙胜", "大客户"]
+  config.main_app_name = ["龙胜", "图文"]
   config.included_models = ['User', 'Resource', 'Role']
   config.model 'User' do
     label_plural "用户"

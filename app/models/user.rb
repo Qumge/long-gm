@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   # has_paper_trail
   belongs_to :role
+  has_and_belongs_to_many :instances, join_table: 'instances_users'
+  has_and_belongs_to_many :products, join_table: 'instances_users'
   devise :database_authenticatable, #:registerable,
          :recoverable, :rememberable, :validatable
 
@@ -37,5 +39,13 @@ class User < ActiveRecord::Base
 
   def resources
     role&.resources
+  end
+
+  def has_product_log_resource?
+    self.role.present? && self.role.resources.find_by(name: '产品-所有文件记录')
+  end
+
+  def has_instance_log_resource?
+    self.role.present? && self.role.resources.find_by(name: '零件-所有文件记录')
   end
 end

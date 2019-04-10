@@ -38,7 +38,13 @@
             <% if products.present? %>
               <% products.each do |product| %>
               <tr>
-                <td><%= link_to product.product_no, product_path(product) %></td>
+                <td>
+                  <% if can? :show, :products %>
+                  <%= link_to product.product_no, product_path(product) %>
+                  <% else %>
+                    <%= product.product_no %>
+                  <% end %>
+                </td>
                 <td><%= product.name %></td>
                 <td><%= product.norms %></td>
                 <td><%= product.user&.name %></td>

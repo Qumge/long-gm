@@ -22,7 +22,7 @@
       </div>
       <!-- /.tab-content -->
       <div class="modal-footer">
-        <%= link_to '图纸上传', upload_file_instance_path(@instance), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-success' %>
+        <%= link_to '图纸上传', upload_file_instance_path(@instance), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-success' if can? 'upload_file', 'instances' %>
         <%= link_to '返回', instances_path, class: 'btn btn-default' %>
       </div>
     </div>

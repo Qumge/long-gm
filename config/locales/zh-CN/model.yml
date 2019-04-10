@@ -38,11 +38,13 @@ zh-CN:
         desc: '备注'
         category_id: '产品类型'
         instance_ids: '关联零件'
+        user_ids: '图纸可见人员'
       instance:
         instance_no: '零件编号'
         name: '零件名'
         norms: '规格尺寸'
         desc: '备注'
+        user_ids: '图纸可见人员'
 
 
 

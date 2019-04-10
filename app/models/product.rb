@@ -26,6 +26,7 @@ class Product < ActiveRecord::Base
   has_many :product_logs
   validates_presence_of :name, :product_no
   has_and_belongs_to_many :instances, join_table: 'products_instances'
+  has_and_belongs_to_many :users, join_table: 'products_users'
   validates_uniqueness_of :name, :product_no
 
 
@@ -33,9 +34,23 @@ class Product < ActiveRecord::Base
     Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
   end
 
+  def view_logs user
+    if user.has_product_log_resource?
+      self.product_logs
+    else
+      self.product_logs.where(user: user)
+    end
+  end
+
   class << self
     def search_conn params
-      Product.all
+      products = Product.joins(:user).all
+      if params[:table_search].present?
+        products = products.where('products.product_no like ? or products.name like ? or products.norms like ? or users.name like ?',
+                                  "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%",
+                                  "%#{params[:table_search]}%")
+      end
+      products
     end
   end
 
