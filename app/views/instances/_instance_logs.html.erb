@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered">
+          <tr>
+            <th>文件名</th>
+            <th>上传人</th>
+            <th>上传时间</th>
+            <th>状态</th>
+            <th>生效时间</th>
+          </tr>
+          <tr>
+            <% if @instance.instance_logs.order('instance_logs.updated_at desc').present? %>
+              <% @instance.instance_logs.order('instance_logs.updated_at desc').each do |instance_log| %>
+                <tr>
+                  <td>
+                    <% if instance_log.file_path.present? %>
+                      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= instance_log.preview_url%>" data-file-name="<%= instance_log.file_name %>">
+                        <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  instance_log %>
+                      </a>
+                      <% else %>
+                      <%= instance_log.file_name %>
+                    <% end %>
+                  </td>
+                  <td><%= instance_log.user&.name %></td>
+                  <td><%= simple_time_mini instance_log.updated_at %></td>
+                  <td><%= instance_log.get_status %></td>
+                  <td><%= simple_time_mini instance_log.active_at %></td>
+                </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="5" align="center">没有可显示的内容</td>
+            </tr>
+          <% end %>
+          </tr>
+        </table>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>

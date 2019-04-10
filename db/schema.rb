@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190404082347) do
+ActiveRecord::Schema.define(version: 20190409024206) do
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value",      limit: 255
@@ -24,6 +24,32 @@ ActiveRecord::Schema.define(version: 20190404082347) do
     t.string   "desc",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "instance_logs", force: :cascade do |t|
+    t.integer  "instance_id", limit: 4
+    t.string   "file_name",   limit: 255
+    t.string   "file_path",   limit: 255
+    t.integer  "user_id",     limit: 4
+    t.string   "status",      limit: 255
+    t.datetime "active_at"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "instances", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "instance_no",     limit: 255
+    t.string   "color",           limit: 255
+    t.string   "norms",           limit: 255
+    t.string   "file_name",       limit: 255
+    t.string   "file_path",       limit: 255
+    t.text     "desc",            limit: 65535
+    t.integer  "user_id",         limit: 4
+    t.integer  "last_user_id",    limit: 4
+    t.datetime "last_updated_at"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "product_logs", force: :cascade do |t|
@@ -51,6 +77,13 @@ ActiveRecord::Schema.define(version: 20190404082347) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.datetime "last_updated_at"
+  end
+
+  create_table "products_instances", force: :cascade do |t|
+    t.integer  "product_id",  limit: 4
+    t.integer  "instance_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "resources", force: :cascade do |t|

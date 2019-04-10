@@ -89,4 +89,12 @@ Rails.application.routes.draw do
       patch :do_upload_file
     end
   end
+
+  resources :instances do
+    member do
+      get :show_version
+      get :upload_file
+      patch :do_upload_file
+    end
+  end
 end

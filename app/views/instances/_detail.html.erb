@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="table-responsive col-sm-6">
+    <table class="table">
+      <tbody>
+      <tr>
+        <th style="width:50%">产品编号</th>
+        <td><%= @instance.instance_no %></td>
+      </tr>
+      <tr>
+        <th>产品名</th>
+        <td><%= @instance.name %></td>
+      </tr>
+      <tr>
+        <th>规格</th>
+        <td><%= @instance.norms %></td>
+      </tr>
+      <tr>
+        <th>备注</th>
+        <td><%= @instance.desc %></td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div class="table-responsive col-sm-6">
+    <table class="table">
+      <tbody>
+      <tr>
+        <th>创建人</th>
+        <td><%= @instance&.user&.name %></td>
+      </tr>
+      <tr>
+        <th>创建时间</th>
+        <td><%= simple_time @instance.created_at %></td>
+      </tr>
+      <tr>
+        <th>图纸变更人</th>
+        <td><%= @instance&.last_user&.name %></td>
+      </tr>
+      <tr>
+        <th>图纸变更时间</th>
+        <td><%= simple_time @instance.last_updated_at %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

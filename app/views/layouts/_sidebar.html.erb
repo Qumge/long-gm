@@ -25,6 +25,13 @@
         <% end %>
       </li>
       <%end %>
+      <% if can? :index, :instances %>
+        <li class="<%= active_class params, 'instances' %>">
+          <%= link_to instances_path do %>
+            <i class="fa fa-cogs"></i> <span>零件</span>
+          <% end %>
+        </li>
+      <%end %>
 
       <% if current_user.has_role? 'super_admin' %>
       <li>

@@ -15,6 +15,7 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require turbolinks
+//= require select2-full
 //= require plupload/js/moxie
 //= require plupload/js/plupload.dev
 //= require common
@@ -47,7 +48,6 @@ var initPage = function () {
         autoclose: true,
         language: 'zh-cn'
     });
-
 };
 
 

@@ -1,0 +1,15 @@
+<% content_for :content_header do %>
+  <h1>
+    零件
+    <small><%= get_title params %></small>
+
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <%=link_to instances_path do %>
+        <i class="fa fa-dashboard"></i> 零件
+      <% end %>
+    </li>
+    <li class="active"><%= get_title params %></li>
+  </ol>
+<% end %>

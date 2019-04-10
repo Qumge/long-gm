@@ -35,6 +35,14 @@ module ApplicationHelper
             edit: '修改产品',
             update: '修改产品',
             show: '产品详情'
+        },
+        instances: {
+            index: '零件列表',
+            new: '添加零件',
+            create: '添加零件',
+            edit: '修改零件',
+            update: '修改零件',
+            show: '零件详情'
         }
 
     }
