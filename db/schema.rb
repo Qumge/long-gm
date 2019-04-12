@@ -11,12 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190410014626) do
+ActiveRecord::Schema.define(version: 20190412024519) do
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value",      limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "audits", force: :cascade do |t|
+    t.integer  "model_id",    limit: 4
+    t.string   "model_type",  limit: 255
+    t.string   "from_status", limit: 255
+    t.string   "to_status",   limit: 255
+    t.string   "content",     limit: 255
+    t.integer  "user_id",     limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "categories", force: :cascade do |t|
@@ -57,6 +68,15 @@ ActiveRecord::Schema.define(version: 20190410014626) do
     t.integer  "user_id",     limit: 4
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+  end
+
+  create_table "notices", force: :cascade do |t|
+    t.integer  "model_id",   limit: 4
+    t.string   "model_type", limit: 255
+    t.text     "content",    limit: 65535
+    t.boolean  "need_reply"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "product_logs", force: :cascade do |t|
@@ -144,6 +164,15 @@ ActiveRecord::Schema.define(version: 20190410014626) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "users_notices", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "notice_id",  limit: 4
+    t.boolean  "replied"
+    t.text     "content",    limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",  limit: 191,        null: false

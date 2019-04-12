@@ -87,6 +87,11 @@ Rails.application.routes.draw do
       get :show_version
       get :upload_file
       patch :do_upload_file
+      get :edit_file
+      patch :update_file
+    end
+    collection do
+      post :apply
     end
   end
 
@@ -95,6 +100,34 @@ Rails.application.routes.draw do
       get :show_version
       get :upload_file
       patch :do_upload_file
+      get :edit_file
+      patch :update_file
+    end
+    collection do
+      post :apply
+    end
+  end
+
+  resources :audits do
+    collection do
+      get 'products'
+      get 'instances'
+    end
+    resources :products do
+      member do
+        patch :do_develop_audit
+        patch :do_flow_audit
+        patch :do_active_audit
+        patch :do_failed_audit
+      end
+    end
+    resources :instances do
+      member do
+        patch :do_develop_audit
+        patch :do_flow_audit
+        patch :do_active_audit
+        patch :do_failed_audit
+      end
     end
   end
 end

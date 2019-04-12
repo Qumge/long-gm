@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="instance_logs">
   <div class="col-md-12">
     <div class="box">
 
@@ -11,6 +11,7 @@
             <th>上传时间</th>
             <th>状态</th>
             <th>生效时间</th>
+            <th></th>
           </tr>
           <tr>
             <% if @instance.view_logs(current_user).order('instance_logs.updated_at desc').present? %>
@@ -32,6 +33,21 @@
                   <td><%= simple_time_mini instance_log.updated_at %></td>
                   <td><%= instance_log.get_status %></td>
                   <td><%= simple_time_mini instance_log.active_at %></td>
+                  <td>
+                    <% if can? :apply, :instances %>
+                    <% if instance_log.may_do_apply? && @current_user == instance_log.user  %>
+                      <%= link_to 'JavaScript:void(0)', onclick: "apply(#{instance_log.id})",class: 'btn btn-xs btn-success' do  %>
+                        <i class="fa fa-circle-o"></i>申请
+                      <% end %>
+                    <% end %>
+                    <% end %>
+
+                    <% if can? :edit_file, :instances %>
+                      <% if ['wait', 'failed'].include? instance_log.status %>
+                        <%= link_to '图纸变更', edit_file_instance_path(instance_log), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-primary btn-xs'%>
+                      <% end %>
+                    <% end %>
+                  </td>
                 </tr>
             <% end %>
           <% else %>
@@ -46,4 +62,22 @@
     </div>
     <!-- /.box -->
   </div>
+  <script type="text/javascript">
+      function apply(id){
+          if(confirm('确认申请吗？')){
+              showSpinner();
+              $.ajax({
+                  type: 'post',
+                  url: '<%= apply_instances_path %>',
+                  data: {id: id},
+                  dataType: 'script',
+                  success: function (data) {
+
+                  }
+              })
+          }
+
+      }
+
+  </script>
 </div>

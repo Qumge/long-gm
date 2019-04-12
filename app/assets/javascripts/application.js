@@ -116,3 +116,13 @@ function hideSpinner() {
     $("#spinner").removeClass("spinner");
 }
 
+function show_flash(type, message){
+    $(".page_tips").fadeIn(function(){
+        setTimeout(function(){
+            $(".page_tips").fadeOut();
+            $(".page_tips").html('');
+        }, 3000);
+    });
+    $(".page_tips").append(
+        '<div class="' + type +'"> <div class="inner">'+ message + '<i class="fa fa-close close-tips"></i> </div> </div>');
+}

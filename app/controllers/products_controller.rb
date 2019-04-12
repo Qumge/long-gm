@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy, :show_version, :upload_file, :do_upload_file]
-  before_action :set_uptoken, only: :upload_file
+  before_action :set_uptoken, only: [:upload_file, :edit_file]
+  before_action :set_log, only: [:edit_file, :update_file, :apply]
   include ApplicationHelper
   def index
     @products = Product.search_conn(params).page(params[:page]).per(Settings.per_page)
@@ -51,6 +52,25 @@ class ProductsController < ApplicationController
     render layout: false
   end
 
+  def apply
+    @product = @log.product
+    begin
+      @log.do_apply!
+      @flag = true
+    rescue => e
+      @flag = false
+    end
+  end
+
+  def edit_file
+    render layout: false
+  end
+
+  def update_file
+    @product = @log.product
+    @flag = @log.update file_path: params[:path], file_name: params[:file_name]
+  end
+
   private
 
   def product_permit
@@ -60,6 +80,11 @@ class ProductsController < ApplicationController
   def set_product
     @product = Product.find_by id: params[:id]
     redirect_to products_path, alert: '找不到数据' unless @product.present?
+  end
+
+  def set_log
+    @log = current_user.product_logs.find_by id: params[:id]
+    redirect_to products_path, alert: '找不到数据' unless @log.present?
   end
 
   def set_uptoken

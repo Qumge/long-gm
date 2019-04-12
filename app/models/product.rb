@@ -30,6 +30,7 @@ class Product < ActiveRecord::Base
   validates_uniqueness_of :name, :product_no
 
 
+
   def preview_url
     Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
   end

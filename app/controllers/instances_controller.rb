@@ -1,6 +1,7 @@
 class InstancesController < ApplicationController
   before_action :set_instance, only: [:show, :edit, :update, :destroy, :show_version, :upload_file, :do_upload_file]
-  before_action :set_uptoken, only: :upload_file
+  before_action :set_uptoken, only: [:upload_file, :edit_file]
+  before_action :set_log, only: [:edit_file, :update_file, :apply]
   include ApplicationHelper
   def index
     @instances = Instance.search_conn(params).page(params[:page]).per(Settings.per_page)
@@ -51,6 +52,25 @@ class InstancesController < ApplicationController
     render layout: false
   end
 
+  def apply
+    @instance = @log.instance
+    begin
+      @log.do_apply!
+      @flag = true
+    rescue => e
+      @flag = false
+    end
+  end
+
+  def edit_file
+    render layout: false
+  end
+
+  def update_file
+    @instance = @log.instance
+    @flag = @log.update file_path: params[:path], file_name: params[:file_name]
+  end
+
   private
 
   def instance_permit
@@ -60,6 +80,11 @@ class InstancesController < ApplicationController
   def set_instance
     @instance = Instance.find_by id: params[:id]
     redirect_to instances_path, alert: '找不到数据' unless @instance.present?
+  end
+
+  def set_log
+    @log = current_user.instance_logs.find_by id: params[:id]
+    redirect_to instances_path, alert: '找不到数据' unless @log.present?
   end
 
   def set_uptoken

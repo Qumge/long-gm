@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="product_logs">
   <div class="col-md-12">
     <div class="box">
 
@@ -11,6 +11,7 @@
             <th>上传时间</th>
             <th>状态</th>
             <th>生效时间</th>
+            <th></th>
           </tr>
           <tr>
             <% if @product.view_logs(current_user).order('product_logs.updated_at desc').present? %>
@@ -32,6 +33,21 @@
                   <td><%= simple_time_mini product_log.updated_at %></td>
                   <td><%= product_log.get_status %></td>
                   <td><%= simple_time_mini product_log.active_at %></td>
+                  <td>
+                    <% if can? :apply, :products %>
+                      <% if product_log.may_do_apply? && @current_user == product_log.user  %>
+                        <%= link_to 'JavaScript:void(0)', onclick: "apply(#{product_log.id})",class: 'btn btn-xs btn-success' do  %>
+                          <i class="fa fa-circle-o"></i>申请
+                        <% end %>
+                      <% end %>
+                    <% end %>
+
+                    <% if can? :edit_file, :instances %>
+                      <% if ['wait', 'failed'].include? product_log.status %>
+                        <%= link_to '图纸变更', edit_file_product_path(product_log), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-primary btn-xs'%>
+                      <% end %>
+                    <% end %>
+                  </td>
                 </tr>
             <% end %>
           <% else %>
@@ -46,4 +62,22 @@
     </div>
     <!-- /.box -->
   </div>
+  <script type="text/javascript">
+      function apply(id){
+          if(confirm('确认申请吗？')){
+              showSpinner();
+              $.ajax({
+                  type: 'post',
+                  url: '<%= apply_products_path %>',
+                  data: {id: id},
+                  dataType: 'script',
+                  success: function (data) {
+
+                  }
+              })
+          }
+
+      }
+
+  </script>
 </div>

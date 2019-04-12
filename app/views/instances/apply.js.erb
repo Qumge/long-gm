@@ -1,0 +1,7 @@
+<% if @flag %>
+show_flash('success', '申请成功');
+<% else %>
+show_flash('failed', '申请失败，请稍后重试');
+<% end %>
+$('#instance_logs').replaceWith('<%= j render(partial: 'instances/instance_logs') %>');
+hideSpinner();
