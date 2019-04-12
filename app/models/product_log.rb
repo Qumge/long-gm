@@ -16,6 +16,7 @@ class ProductLog < ActiveRecord::Base
   include AASM
   belongs_to :user
   belongs_to :product
+  has_many :audits, -> {where(model_type: 'ProductLog')}, foreign_key: :model_id
 
   STATUS = {wait: '草稿', apply: '申请中', developer: '技术已审批', flow: '流程化', active: '申请成功', failed: '申请失败'}
 
@@ -24,19 +25,19 @@ class ProductLog < ActiveRecord::Base
     state :apply, :develop, :flow, :active, :failed
 
     event :do_apply do
-      transitions :from => :wait, :to => :apply, :after => Proc.new { }
+      transitions :from => [:wait, :failed], :to => :apply, :after => Proc.new {after_apply }
     end
     event :do_develop_audit do
-      transitions :from => :apply, :to => :develop, :after => Proc.new { }
+      transitions :from => :apply, :to => :develop, :after => Proc.new {after_develop }
     end
     event :do_flow_audit do
-      transitions :from => :develop, :to => :flow, :after => Proc.new { }
+      transitions :from => :develop, :to => :flow, :after => Proc.new {after_flow }
     end
     event :do_active_audit do
-      transitions :from => :flow, :to => :active, :after => Proc.new { }
+      transitions :from => :flow, :to => :active, :after => Proc.new {after_active}
     end
     event :do_failed_audit do
-      transitions :from => [:apply, :developer, :flow], :to => :failed, :after => Proc.new { }
+      transitions :from => [:apply, :developer, :flow], :to => :failed, :after => Proc.new {after_failed }
     end
   end
 
@@ -46,5 +47,26 @@ class ProductLog < ActiveRecord::Base
 
   def get_status
     ProductLog::STATUS[self.status.to_sym] if self.status.present?
+  end
+
+  def after_apply
+    self.update apply_at: DateTime.now
+  end
+
+  def after_develop
+
+  end
+
+  def after_flow
+
+  end
+
+  def after_active
+    self.update active_at: DateTime.now
+    self.product.update file_path: self.file_path, file_name: self.file_name, active_at: DateTime.now, file_user: self.user
+  end
+
+  def after_failed
+
   end
 end

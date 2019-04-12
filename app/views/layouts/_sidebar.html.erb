@@ -33,6 +33,14 @@
         </li>
       <%end %>
 
+      <% if can? :index, :audits %>
+        <li class="<%= active_class params, 'audits' %>">
+          <%= link_to audits_path do %>
+            <i class="fa fa-pencil"></i> <span>审批</span>
+          <% end %>
+        </li>
+      <%end %>
+
       <% if current_user.has_role? 'super_admin' %>
       <li>
         <%= link_to rails_admin_path do %>

@@ -1,0 +1,59 @@
+<%= render 'audits/header' %>
+<div class="row">
+  <div class="box-body">
+    <div class="row">
+      <!-- ./col -->
+      <% if can? :products, :audits %>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h4>产品图纸审批</h4>
+
+              <p style="height: 13px;"></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-leaf"></i>
+            </div>
+            <%= link_to products_audits_path, class: 'small-box-footer' do %>
+              详情 <i class="fa fa-arrow-circle-right"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if can? :instances, :audits %>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-primary">
+            <div class="inner">
+              <h4>零件图纸审批</h4>
+
+              <p style="height: 13px;"></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-cogs"></i>
+            </div>
+            <%= link_to instances_audits_path, class: 'small-box-footer' do %>
+              详情 <i class="fa fa-arrow-circle-right"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+
+    </div>
+
+
+  </div>
+
+  <!-- 初始化按钮 start -->
+  <div class="col-md-12">
+
+  </div>
+  <!-- 初始化按钮 end -->
+
+  <!-- 初始化配置 start -->
+
+
+</div>

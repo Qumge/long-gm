@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   # has_paper_trail
   belongs_to :role
   has_and_belongs_to_many :instances, join_table: 'instances_users'
-  has_and_belongs_to_many :products, join_table: 'instances_users'
+  has_and_belongs_to_many :products, join_table: 'products_users'
   has_many :instance_logs
   has_many :product_logs
   devise :database_authenticatable, #:registerable,

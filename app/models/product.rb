@@ -23,6 +23,7 @@ class Product < ActiveRecord::Base
   }
   belongs_to :user
   belongs_to :last_user, foreign_key: :last_user_id, class_name: 'users'
+  belongs_to :file_user, foreign_key: :file_user_id, class_name: 'users'
   has_many :product_logs
   validates_presence_of :name, :product_no
   has_and_belongs_to_many :instances, join_table: 'products_instances'

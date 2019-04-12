@@ -9,6 +9,7 @@
             <th>产品编号</th>
             <th>产品名</th>
             <th>产品型号</th>
+            <th>被变更时间</th>
             <th>图纸创建人</th>
             <th>图纸</th>
           </tr>
@@ -26,7 +27,8 @@
                   </td>
                   <td><%= version.reify.name %></td>
                   <td><%= version.reify.norms %></td>
-                  <td><%= version.reify&.user&.name %></td>
+                  <td><%= simple_time_mini version.created_at %></td>
+                  <td><%= version.reify&.file_user&.name %></td>
                   <td>
                     <% if version.reify.file_path.present? && current_user.products.include?(@product) %>
                     <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= version.reify.preview_url%>" data-file-name="<%= version.reify.file_name %>">

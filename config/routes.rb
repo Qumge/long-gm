@@ -92,6 +92,10 @@ Rails.application.routes.draw do
     end
     collection do
       post :apply
+      post :do_develop_audit
+      post :do_flow_audit
+      post :do_active_audit
+      post :do_failed_audit
     end
   end
 
@@ -105,6 +109,10 @@ Rails.application.routes.draw do
     end
     collection do
       post :apply
+      post :do_develop_audit
+      post :do_flow_audit
+      post :do_active_audit
+      post :do_failed_audit
     end
   end
 
@@ -112,22 +120,6 @@ Rails.application.routes.draw do
     collection do
       get 'products'
       get 'instances'
-    end
-    resources :products do
-      member do
-        patch :do_develop_audit
-        patch :do_flow_audit
-        patch :do_active_audit
-        patch :do_failed_audit
-      end
-    end
-    resources :instances do
-      member do
-        patch :do_develop_audit
-        patch :do_flow_audit
-        patch :do_active_audit
-        patch :do_failed_audit
-      end
     end
   end
 end

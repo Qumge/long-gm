@@ -2,6 +2,7 @@ class InstanceLog < ActiveRecord::Base
   include AASM
   belongs_to :instance
   belongs_to :user
+  has_many :audits, -> {where(model_type: 'InstanceLog')}, foreign_key: :model_id
 
   STATUS = {wait: '草稿', apply: '申请中', developer: '技术已审批', flow: '流程化', active: '申请成功', failed: '申请失败'}
 
@@ -35,7 +36,7 @@ class InstanceLog < ActiveRecord::Base
   end
 
   def after_apply
-
+    self.update apply_at: DateTime.now
   end
 
   def after_develop
@@ -47,7 +48,8 @@ class InstanceLog < ActiveRecord::Base
   end
 
   def after_active
-
+    self.update active_at: DateTime.now
+    self.instance.update file_path: self.file_path, file_name: self.file_name, active_at: DateTime.now, file_user: self.user
   end
 
   def after_failed

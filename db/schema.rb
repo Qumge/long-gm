@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190412024519) do
+ActiveRecord::Schema.define(version: 20190412095151) do
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value",      limit: 255
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20190412024519) do
     t.datetime "active_at"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.datetime "apply_at"
   end
 
   create_table "instances", force: :cascade do |t|
@@ -61,6 +62,8 @@ ActiveRecord::Schema.define(version: 20190412024519) do
     t.datetime "last_updated_at"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.datetime "file_user_id"
+    t.datetime "active_at"
   end
 
   create_table "instances_users", force: :cascade do |t|
@@ -88,6 +91,7 @@ ActiveRecord::Schema.define(version: 20190412024519) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.datetime "active_at"
+    t.datetime "apply_at"
   end
 
   create_table "products", force: :cascade do |t|
@@ -104,6 +108,8 @@ ActiveRecord::Schema.define(version: 20190412024519) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.datetime "last_updated_at"
+    t.integer  "file_user_id",    limit: 4
+    t.integer  "active_at",       limit: 4
   end
 
   create_table "products_instances", force: :cascade do |t|

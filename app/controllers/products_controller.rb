@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy, :show_version, :upload_file, :do_upload_file]
   before_action :set_uptoken, only: [:upload_file, :edit_file]
-  before_action :set_log, only: [:edit_file, :update_file, :apply]
+  before_action :set_log, only: [:edit_file, :update_file, :apply, :do_develop_audit, :do_flow_audit, :do_active_audit, :do_failed_audit]
   include ApplicationHelper
   def index
     @products = Product.search_conn(params).page(params[:page]).per(Settings.per_page)
@@ -69,6 +69,54 @@ class ProductsController < ApplicationController
   def update_file
     @product = @log.product
     @flag = @log.update file_path: params[:path], file_name: params[:file_name]
+  end
+
+  def do_develop_audit
+    begin
+      from_status = @log.status
+      @log.do_develop_audit!
+      @log.audits.create from_status: from_status, to_status: @log.status, user: current_user
+      @flag = true
+    rescue => e
+      @flag = false
+    end
+    render js: 'location.reload()'
+  end
+
+  def do_flow_audit
+    begin
+      from_status = @log.status
+      @log.do_flow_audit!
+      @log.audits.create from_status: from_status, to_status: @log.status, user: current_user
+      @flag = true
+    rescue => e
+      @flag = false
+    end
+    render js: 'location.reload()'
+  end
+
+  def do_active_audit
+    begin
+      from_status = @log.status
+      @log.do_active_audit!
+      @log.audits.create from_status: from_status, to_status: @log.status, user: current_user
+      @flag = true
+    rescue => e
+      @flag = false
+    end
+    render js: 'location.reload()'
+  end
+
+  def do_failed_audit
+    begin
+      from_status = @log.status
+      @log.do_failed_audit!
+      @log.audits.create from_status: from_status, to_status: @log.status, user: current_user
+      @flag = true
+    rescue => e
+      @flag = false
+    end
+    render js: 'location.reload()'
   end
 
   private

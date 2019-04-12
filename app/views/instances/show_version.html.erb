@@ -23,16 +23,16 @@
       <td><%= @version.reify&.user&.name %></td>
     </tr>
     <tr>
-      <th>变更时间</th>
+      <th>被变更时间</th>
       <td><%= simple_time @version.created_at %></td>
     </tr>
     <tr>
       <th>图纸变更人</th>
-      <td><%= @version.reify&.last_user&.name %></td>
+      <td><%= @version.reify&.file_user&.name %></td>
     </tr>
     <tr>
-      <th>图纸变更时间</th>
-      <td><%= simple_time @version.reify&.last_updated_at %></td>
+      <th>图纸生效时间</th>
+      <td><%= simple_time @version.reify&.active_at %></td>
     </tr>
     <tr>
       <th>备注</th>

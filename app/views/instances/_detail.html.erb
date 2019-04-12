@@ -23,7 +23,7 @@
           图纸
         </th>
         <td>
-          <% if @instance.file_path.present? && current_user.products.include?(@instance)%>
+          <% if @instance.file_path.present? && current_user.instances.include?(@instance)%>
             <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @instance.preview_url%>" data-file-name="<%= @instance.file_name %>">
               <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  @instance %>
             </a>

@@ -4,6 +4,7 @@ class Instance < ActiveRecord::Base
   }
   belongs_to :user
   belongs_to :last_user, foreign_key: :last_user_id, class_name: 'users'
+  belongs_to :file_user, foreign_key: :file_user_id, class_name: 'users'
   has_many :instance_logs
   validates_presence_of :name, :instance_no
   has_and_belongs_to_many :products, join_table: 'products_instances'
