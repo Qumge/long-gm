@@ -10,6 +10,7 @@ class Instance < ActiveRecord::Base
   has_and_belongs_to_many :products, join_table: 'products_instances'
   has_and_belongs_to_many :users, join_table: 'instances_users'
   validates_uniqueness_of :name, :instance_no
+  has_and_belongs_to_many :technologies, join_table: 'technology_instances'
 
 
   def preview_url

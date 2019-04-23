@@ -75,8 +75,8 @@ GEM
     bcrypt (3.1.12)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
-    bootstrap3-datetimepicker-rails (4.17.47)
-      momentjs-rails (>= 2.8.1)
+    bootstrap-datepicker-rails (1.8.0.1)
+      railties (>= 3.0)
     bower-rails (0.10.0)
     builder (3.2.3)
     byebug (11.0.1)
@@ -311,7 +311,7 @@ DEPENDENCIES
   active_importer
   ancestry
   annotate
-  bootstrap3-datetimepicker-rails (~> 4.17.47)
+  bootstrap-datepicker-rails
   bower-rails (~> 0.10.0)
   byebug
   cancancan (~> 2.0)

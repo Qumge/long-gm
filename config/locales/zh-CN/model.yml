@@ -45,6 +45,12 @@ zh-CN:
         norms: '规格尺寸'
         desc: '备注'
         user_ids: '图纸可见人员'
+      technology:
+        No: '文件编号'
+        name: '文件名'
+        valid_at: '生效时间'
+        desc: '备注'
+        instance_ids: '关联零件'
 
 
 

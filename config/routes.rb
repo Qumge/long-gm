@@ -122,4 +122,5 @@ Rails.application.routes.draw do
       get 'instances'
     end
   end
+  resources :technologies
 end

@@ -33,6 +33,14 @@
         </li>
       <%end %>
 
+      <% if can? :index, :technologies %>
+        <li class="<%= active_class params, 'technologies' %>">
+          <%= link_to technologies_path do %>
+            <i class="fa fa-file-o"></i> <span>工艺文件</span>
+          <% end %>
+        </li>
+      <%end %>
+
       <% if can? :index, :audits %>
         <li class="<%= active_class params, 'audits' %>">
           <%= link_to audits_path do %>

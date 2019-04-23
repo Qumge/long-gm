@@ -58,7 +58,7 @@ gem "paranoia", "~> 2.2"
 gem 'active_importer'
 gem 'vestal_versions', :git => 'git://github.com/laserlemon/vestal_versions' #版本控制
 gem 'mysql2', '~> 0.4.0'
-gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
+gem 'bootstrap-datepicker-rails'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'aasm'                                                    # 状态管理
 gem 'bower-rails', '~> 0.10.0'                                # node 包管理

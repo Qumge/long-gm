@@ -1,0 +1,83 @@
+<div class="row" id="technology-list">
+  <div class="col-md-12">
+    <div class="box">
+      <%= form_tag technologies_path, method: :get do%>
+      <div class="box-header with-border">
+        <h3 class="box-title">工艺文件列表</h3>
+        <% if can? :new, :technologies %>
+          <small><%= link_to '添加工艺文件', new_technology_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
+        <% end %>
+      </div>
+      <div class="box-tools">
+        <div class="input-group input-group-sm">
+          <div class="pull-right">
+            <div class="col-xs-12">
+              <input type="text" name="table_search" class="form-control" placeholder="检索" value="<%= params[:table_search] %>">
+            </div>
+          </div>
+
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+
+
+      <% end %>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered">
+          <tr>
+            <th>文件编号</th>
+            <th>文件名</th>
+            <th>生效时间</th>
+            <th>创建人</th>
+            <th></th>
+          </tr>
+          <tr>
+            <% if technologies.present? %>
+              <% technologies.each do |technology| %>
+              <tr>
+                <td>
+                  <% if can? :show, :technologies %>
+                  <%= link_to technology.no, technology_path(technology) %></td>
+                    <% else %>
+                  <%=technology.no %>
+                    <% end %>
+                <td><%= technology.name %></td>
+                <td><%= simple_time technology.valid_at %></td>
+                <td><%= technology.user&.name %></td>
+                <td>
+
+                  <% if can? :edit, :technologies %>
+                    <%= link_to  edit_technology_path(technology), class: 'btn btn-success btn-xs', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
+                      <i class="fa fa-edit"></i>编辑
+                    <% end %>
+                  <% end %>
+                  <% if can? :destroy, :technologies %>
+                    <%= link_to technology_path(technology), method: :delete, data: {confirm: '确定删除吗？'}, class: 'btn btn-danger btn-xs' do %>
+                                        <i class="fa fa-close"></i>删除
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="5" align="center">没有可显示的内容</td>
+            </tr>
+          <% end %>
+          </tr>
+
+        </table>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <div class="pull-right pagination-sm no-margin">
+          <%= paginate technologies, params: {table_search: params[:table_search]} %>
+        </div>
+      </div>
+    </div>
+    <!-- /.box -->
+  </div>
+</div>

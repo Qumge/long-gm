@@ -43,6 +43,14 @@ module ApplicationHelper
             edit: '修改零件',
             update: '修改零件',
             show: '零件详情'
+        },
+        technologies: {
+            index: '工艺文件列表',
+            new: '添加工艺文件',
+            create: '添加工艺文件',
+            edit: '修改工艺文件',
+            update: '修改工艺文件',
+            show: '工艺文件详情'
         }
 
     }

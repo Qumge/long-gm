@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190412095151) do
+ActiveRecord::Schema.define(version: 20190422040528) do
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value",      limit: 255
@@ -146,6 +146,25 @@ ActiveRecord::Schema.define(version: 20190412095151) do
     t.string   "desc",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "technologies", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.string   "no",         limit: 255
+    t.string   "name",       limit: 255
+    t.datetime "valid_at"
+    t.text     "desc",       limit: 65535
+    t.string   "file_name",  limit: 255
+    t.string   "file_path",  limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "technology_instances", force: :cascade do |t|
+    t.integer  "technology_id", limit: 4
+    t.integer  "instance_id",   limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "users", force: :cascade do |t|
