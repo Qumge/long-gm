@@ -31,12 +31,19 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :products, join_table: 'products_users'
   has_many :instance_logs
   has_many :product_logs
+  has_many :user_notices
+  has_many :send_notices, class_name: 'Notice'
+  has_and_belongs_to_many :notices, join_table: 'user_notices'
   devise :database_authenticatable, #:registerable,
          :recoverable, :rememberable, :validatable
 
 
   def has_role? role
     true
+  end
+
+  def user_notice notice
+    user_notices.find_by notice: notice
   end
 
   def resources
@@ -50,4 +57,6 @@ class User < ActiveRecord::Base
   def has_instance_log_resource?
     self.role.present? && self.role.resources.find_by(name: '零件-所有文件记录')
   end
+
+
 end

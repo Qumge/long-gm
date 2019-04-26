@@ -49,6 +49,34 @@
         </li>
       <%end %>
 
+        <li class="<%= active_class params, 'notices' %>">
+
+          <a href="javascript:void(0)">
+            <i class="fa fa-bell"></i>
+            <span>通知</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            <% if can? :receives, :notices %>
+              <li class="<%= active_class params, 'receives', 'notices' %>">
+                <%= link_to receives_notices_path do %>
+                  <i class="fa fa-envelope"></i> <span>收件箱</span>
+                <% end %>
+              </li>
+            <% end %>
+            <% if can? :sends, :notices %>
+              <li class="<%= active_class params, 'sends', 'notices' %>">
+                <%= link_to sends_notices_path do %>
+                  <i class="fa fa-send"></i> <span>发件箱</span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+
       <% if current_user.has_role? 'super_admin' %>
       <li>
         <%= link_to rails_admin_path do %>

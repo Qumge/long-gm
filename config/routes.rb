@@ -123,4 +123,16 @@ Rails.application.routes.draw do
     end
   end
   resources :technologies
+  resources :notices do
+    collection do
+      get :receives
+      get :sends
+    end
+    member do
+      get :show_notice
+      get :reply
+      patch :do_reply
+      patch :read
+    end
+  end
 end

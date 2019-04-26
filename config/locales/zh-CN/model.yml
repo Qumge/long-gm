@@ -51,6 +51,13 @@ zh-CN:
         valid_at: '生效时间'
         desc: '备注'
         instance_ids: '关联零件'
+      notice:
+        title: '标题'
+        content: '内容'
+        user_ids: '收信人'
+        need_reply: '需要回复'
+      user_notice:
+        reply: '回复内容'
 
 
 

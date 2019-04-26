@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-md-10">
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3><%= @user_notice&.notice&.title %></h3>
+
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+      <div class="mailbox-read-info">
+
+        <h5>发件人: <%= @user_notice&.notice&.user&.name %>
+          <span class="mailbox-read-time pull-right"><%= simple_time_mini @user_notice.created_at %></span></h5>
+      </div>
+      <!-- /.mailbox-read-info -->
+      <!-- /.mailbox-controls -->
+      <div class="mailbox-controls with-border text-center">
+      </div>
+      <div class="mailbox-read-message">
+        <textarea class="form-control" style='width:90%;' rows="10" disabled="">
+          <%= @user_notice&.notice.content %>
+        </textarea>
+        <%#= text_area_tag :content, @user_notice&.notice&.content, style:'width:90%;min-height:50px;', readonly: 'readonly' %>
+
+      </div>
+      <% if @user_notice.replied %>
+        <div class="mailbox-read-info">
+          <h5>我的回复
+            <span class="mailbox-read-time pull-right"><%= simple_time_mini @user_notice.replied_at %></span>
+          </h5>
+        </div>
+        <div class="mailbox-read-message">
+        <textarea class="form-control" style='width:90%;' rows="5" disabled="">
+          <%= @user_notice&.reply %>
+        </textarea>
+          <%#= text_area_tag :content, @user_notice&.notice&.content, style:'width:90%;min-height:50px;', readonly: 'readonly' %>
+
+        </div>
+      <% end %>
+      <!-- /.mailbox-read-message -->
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      <ul class="mailbox-attachments clearfix">
+        <% if @user_notice&.notice&.file.present? %>
+        <li>
+          <span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
+
+          <div class="mailbox-attachment-info">
+            <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file mailbox-attachment-name" data-url="<%= @user_notice&.notice&.file.preview_url%>" data-file-name="<%= @user_notice&.notice&.file.file_name %>">
+              <i class="fa fa-paperclip"></i><%= show_file_name '图纸文件',  @user_notice&.notice&.file %>
+            </a>
+          </div>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <!-- /.box-footer -->
+    <div class="box-footer">
+      <div class="pull-right">
+        <% if @user_notice&.notice.need_reply && !@user_notice.replied %>
+          <%= link_to reply_notice_path, 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
+            <button type="button" class="btn btn-default">
+              <i class="fa fa-reply"></i> 回复
+            </button>
+          <% end %>
+        <% end %>
+      </div>
+
+    </div>
+    <!-- /.box-footer -->
+  </div>
+  <!-- /. box -->
+</div>
+</div>
+<!-- /.col -->
+</div>

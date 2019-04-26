@@ -12,7 +12,6 @@ class Instance < ActiveRecord::Base
   validates_uniqueness_of :name, :instance_no
   has_and_belongs_to_many :technologies, join_table: 'technology_instances'
 
-
   def preview_url
     Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
   end

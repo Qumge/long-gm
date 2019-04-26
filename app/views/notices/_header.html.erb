@@ -1,0 +1,15 @@
+<% content_for :content_header do %>
+  <h1>
+    通知
+    <small><%= get_title params %></small>
+
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <%=link_to receives_notices_path do %>
+        <i class="fa fa-dashboard"></i> 通知
+      <% end %>
+    </li>
+    <li class="active"><%= get_title params %></li>
+  </ol>
+<% end %>

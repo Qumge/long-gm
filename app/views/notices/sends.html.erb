@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-primary">
+      <%= form_tag receives_notices_path, method: 'get' do %>
+        <div class="box-header with-border">
+          <h3 class="box-title">发件箱
+            <% if can? :new, :notices %>
+              <small><%= link_to '发送信息', new_notice_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
+            <% end %>
+          </h3>
+
+          <div class="box-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+              <%=text_field_tag :table_search, params[:table_search],class: "form-control pull-right", placeholder: "检索" %>
+
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+          <!-- /.box-tools -->
+        </div>
+      <% end %>
+      <!-- /.box-header -->
+      <div class="box-body no-padding">
+        <div class="box-footer no-padding">
+          <div class="mailbox-controls">
+            <!-- Check all button -->
+            </button>
+            <div class="pull-right pagination-sm no-margin">
+              <%= paginate @send_notices, params: {table_search: params[:table_search]} %>
+              <!-- /.btn-group -->
+            </div>
+            <!-- /.pull-right -->
+          </div>
+        </div>
+        <div class="table-responsive mailbox-messages">
+          <table class="table table-hover table-striped">
+            <tbody>
+            <% if @send_notices.present? %>
+              <% @send_notices.each do |notice| %>
+                <tr>
+                  <td class="mailbox-name"><%= link_to notice&.title, show_notice_notice_path(notice) %></td>
+                  <td class="mailbox-subject"><%= notice.sub_content %></td>
+                  <td class="mailbox-subject"><%= notice.need_reply ? '需要回复' : '无需回复' %></td>
+                  <td class="mailbox-subject"><%= "#{notice.replied_users.size} / #{notice.readed_users.size} / #{notice.user_notices.size}" %> </td>
+                  <td class="mailbox-attachment">
+                    <% if notice&.file&.present? %>
+                      <i class="fa fa-paperclip"></i>
+                    <% end %>
+                  </td>
+                  <td class="mailbox-date"><%= simple_time_mini notice&.created_at %></td>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr>
+                <td colspan="4">
+                  无数据
+                </td>
+              </tr>
+            <% end %>
+
+            </tbody>
+          </table>
+          <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer no-padding">
+        <div class="mailbox-controls">
+          <!-- Check all button -->
+
+          <div class="pull-right pagination-sm no-margin">
+            <%= paginate @send_notices, params: {table_search: params[:table_search]} %>
+            <!-- /.btn-group -->
+          </div>
+          <!-- /.pull-right -->
+        </div>
+      </div>
+    </div>
+    <!-- /. box -->
+  </div>
+  <!-- /.col -->
+</div>

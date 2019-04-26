@@ -15,7 +15,7 @@ class TechnologiesController < ApplicationController
     @technology = Technology.new
     @technology.user = current_user
     @technology.file_path = params[:file_path]
-    @technology.file_name = params[:file_path]
+    @technology.file_name = params[:file_name]
     @flag = @technology.update technology_permit
   end
 
@@ -29,7 +29,7 @@ class TechnologiesController < ApplicationController
 
   def update
     @technology.file_path = params[:file_path]
-    @technology.file_name = params[:file_path]
+    @technology.file_name = params[:file_name]
     @flag = @technology.update technology_permit
   end
 

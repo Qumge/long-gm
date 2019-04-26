@@ -1,0 +1,32 @@
+<%= render 'notices/header' %>
+
+<div class="row">
+  <div class="box-body">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs" data-turbolinks="false">
+        <li class="active"><a href="#tab_1" data-toggle="tab">接收通知</a></li>
+        <li><a href="#tab_2" data-toggle="tab">发送通知</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+          <%= render partial: 'notices/receives', locals: {user_notices: @receive_notices} %>
+        </div>
+        <div class="tab-pane" id="tab_2">
+          <%= render partial: 'notices/sends', locals: {notices: @send_notices} %>
+          <%#= render 'notices/send_notices' %>
+        </div>
+        <!-- /.tab-pane -->
+        <!-- /.tab-pane -->
+      </div>
+      <!-- /.tab-content -->
+    </div>
+    <!-- nav-tabs-custom -->
+
+  </div>
+
+  <!-- 初始化按钮 start -->
+  <div class="col-md-12">
+  </div>
+  <!-- 初始化按钮 end -->
+  <!-- 初始化配置 start -->
+</div>

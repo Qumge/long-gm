@@ -1,0 +1,77 @@
+<%= render 'notices/header' %>
+<div class="row">
+  <div class="col-md-10">
+  <div class="box">
+<div class="box-body">
+  <div class="table-responsive col-sm-10">
+    <table class="table">
+      <tbody>
+      <tr>
+        <th >标题</th>
+        <td><%= @notice.title %></td>
+      </tr>
+      <tr>
+        <th>内容</th>
+        <td><%= @notice.content %></td>
+      </tr>
+      <tr>
+        <th>需要回复</th>
+        <td><%= @notice.need_reply ? '是' : '否' %></td>
+      </tr>
+
+      <tr>
+        <th>
+          附件
+        </th>
+        <td>
+          <ul class="mailbox-attachments clearfix">
+            <% if @notice&.file.present? %>
+              <li>
+                <span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
+
+                <div class="mailbox-attachment-info">
+                  <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file mailbox-attachment-name" data-url="<%= @notice&.file.preview_url%>" data-file-name="<%= @notice&.file.file_name %>">
+                    <i class="fa fa-paperclip"></i><%= show_file_name '图纸文件',  @notice&.file %>
+                  </a>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <th>收信人</th>
+        <td>
+          <% @notice.users.each do |user| %>
+            <span class="label label-primary " style="padding-bottom: 2px;padding-top: 2px;"><%= user.name %></span>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>已读</th>
+        <td>
+          <% @notice.readed_users.each do |user_notice| %>
+            <span class="label label-primary " style="padding-bottom: 2px;padding-top: 2px;"><%= user_notice&.user&.name %></span>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>已回复</th>
+        <td>
+          <% @notice.replied_users.each do |user| %>
+            <span class="label label-primary " style="padding-bottom: 2px;padding-top: 2px;"><%= user_notice&.user&.name %></span>
+          <% end %>
+        </td>
+      </tr>
+
+
+      </tbody>
+    </table>
+  </div>
+</div>
+  </div>
+</div>
+</div>
