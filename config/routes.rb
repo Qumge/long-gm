@@ -135,4 +135,5 @@ Rails.application.routes.draw do
       patch :read
     end
   end
+  resources :home, only: [:index]
 end

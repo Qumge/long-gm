@@ -1,1 +1,97 @@
-111
+<%= render 'home/header' %>
+<div class="row" id="product-list">
+  <div class="col-md-12">
+    <div class="box">
+      <%= form_tag root_path, method: :get do%>
+        <div class="box-header with-border">
+          <h3 class="box-title">图纸检索</h3>
+        </div>
+        <div class="box-tools">
+          <div class="input-group input-group-sm">
+            <div class="pull-right">
+              <div class="col-xs-12">
+                <input type="text" name="table_search" class="form-control" placeholder="检索" value="<%= params[:table_search] %>">
+              </div>
+            </div>
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+
+
+      <% end %>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered">
+          <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>类型</th>
+            <th>最后更新时间</th>
+            <th>创建人</th>
+            <th>文件</th>
+          </tr>
+          <tr>
+            <% if @datas.present? %>
+              <% @datas.each do |data| %>
+              <tr>
+                <td>
+                  <% if data.is_a? Instance %>
+                    <% if can? :show, :instances %>
+                      <%= link_to data.instance_no, instance_path(data) %></td>
+                    <% else %>
+                      <%=data.instance_no %>
+                    <% end %>
+                  <% elsif data.is_a? Product %>
+                    <% if can? :show, :products %>
+                      <%= link_to data.product_no, product_path(data) %>
+                    <% else %>
+                      <%= data.product_no %>
+                    <% end %>
+                  <% elsif data.is_a? Technology %>
+                    <% if can? :show, :technologies %>
+                      <%= link_to data.no, technology_path(data) %>
+                    <% else %>
+                      <%=data.no %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td><%= data.name %></td>
+                <td><%= data.model_name %></td>
+                <td><%= simple_time data.updated_at %></td>
+                <td><%= data.user&.name %></td>
+                <td>
+                  <% if data.file_path.present? && (data.is_a?(Technology) || current_user.send(data.class.name.pluralize.downcase).include?(data))%>
+                    <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= data.preview_url%>" data-file-name="<%= data.file_name %>">
+                      <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  data %>
+                    </a>
+                    <%= link_to data.preview_url, class: 'btn' do  %>
+                      <i class="fa fa-download"></i>
+                    <% end %>
+                  <% else %>
+                    <%= data.file_name %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="6" align="center">没有可显示的内容</td>
+            </tr>
+          <% end %>
+          </tr>
+
+        </table>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <div class="pull-right pagination-sm no-margin">
+          <%= paginate @datas, params: {table_search: params[:table_search]} %>
+        </div>
+      </div>
+    </div>
+    <!-- /.box -->
+  </div>
+</div>

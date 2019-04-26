@@ -8,6 +8,10 @@ class Technology < ActiveRecord::Base
     Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
   end
 
+  def model_name
+    '工艺文件'
+  end
+
 
   class << self
     def search_conn params

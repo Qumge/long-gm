@@ -24,6 +24,10 @@ class Instance < ActiveRecord::Base
     end
   end
 
+  def model_name
+    '零件'
+  end
+
   class << self
     def search_conn params
       instances = Instance.joins(:user).all

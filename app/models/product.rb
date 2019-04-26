@@ -44,6 +44,10 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def model_name
+    '产品'
+  end
+
   class << self
     def search_conn params
       products = Product.joins(:user).all

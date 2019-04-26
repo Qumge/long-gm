@@ -1,0 +1,15 @@
+<% content_for :content_header do %>
+  <h1>
+    图纸检索
+    <small><%= get_title params %></small>
+
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <%=link_to root_path do %>
+        <i class="fa fa-dashboard"></i> 图纸检索
+      <% end %>
+    </li>
+    <li class="active"><%= get_title params %></li>
+  </ol>
+<% end %>
