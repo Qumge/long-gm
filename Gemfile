@@ -11,6 +11,7 @@ source 'https://rails-assets.org' do
   #gem 'rails-assets-echarts'
   gem 'rails-assets-slimScroll'
   gem 'rails-assets-wysihtml5'
+  gem 'rails-assets-cytoscape'
 end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.8'

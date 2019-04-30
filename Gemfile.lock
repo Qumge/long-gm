@@ -205,6 +205,7 @@ GEM
     rails-assets-bootstrap-treeview (1.2.0)
       rails-assets-bootstrap (>= 3.0.0)
       rails-assets-jquery (>= 1.9.0)
+    rails-assets-cytoscape (3.5.4)
     rails-assets-font-awesome (4.3.0)
     rails-assets-jquery (3.3.1)
     rails-assets-jquery-form-validator (2.3.79)
@@ -332,6 +333,7 @@ DEPENDENCIES
   rails-assets-bootstrap (~> 3.3.0)!
   rails-assets-bootstrap-directional-buttons!
   rails-assets-bootstrap-treeview!
+  rails-assets-cytoscape!
   rails-assets-font-awesome (~> 4.3.0)!
   rails-assets-jquery-form-validator!
   rails-assets-slimScroll!

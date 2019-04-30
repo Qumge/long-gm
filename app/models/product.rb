@@ -25,6 +25,7 @@ class Product < ActiveRecord::Base
   belongs_to :last_user, foreign_key: :last_user_id, class_name: 'users'
   belongs_to :file_user, foreign_key: :file_user_id, class_name: 'users'
   has_many :product_logs
+  has_many :products_instances
   validates_presence_of :name, :product_no
   has_and_belongs_to_many :instances, join_table: 'products_instances'
   has_and_belongs_to_many :users, join_table: 'products_users'
@@ -44,7 +45,7 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def model_name
+  def get_model_name
     '产品'
   end
 

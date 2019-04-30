@@ -102,7 +102,6 @@ class InstancesController < ApplicationController
       @log.audits.create from_status: from_status, to_status: @log.status, user: current_user
       @flag = true
     rescue => e
-      p e.message, 111111111111
       @flag = false
     end
     render js: 'location.reload()'

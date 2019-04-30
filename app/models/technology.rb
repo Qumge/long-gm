@@ -3,12 +3,13 @@ class Technology < ActiveRecord::Base
   belongs_to :user
   validates_uniqueness_of :name, :no
   validates_presence_of :name, :no
+  has_many :technology_instances, dependent: :destroy
 
   def preview_url
     Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
   end
 
-  def model_name
+  def get_model_name
     '工艺文件'
   end
 

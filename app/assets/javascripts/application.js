@@ -23,6 +23,7 @@
 //= require admin-lte
 //= require bootstrap-datepicker/core
 //= require slimScroll
+//= require cytoscape
 //= require_tree .
 
 

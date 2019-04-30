@@ -6,6 +6,8 @@ class Instance < ActiveRecord::Base
   belongs_to :last_user, foreign_key: :last_user_id, class_name: 'users'
   belongs_to :file_user, foreign_key: :file_user_id, class_name: 'users'
   has_many :instance_logs
+  has_many :products_instances, dependent: :destroy
+  has_many :technology_instances, dependent: :destroy
   validates_presence_of :name, :instance_no
   has_and_belongs_to_many :products, join_table: 'products_instances'
   has_and_belongs_to_many :users, join_table: 'instances_users'
@@ -24,7 +26,7 @@ class Instance < ActiveRecord::Base
     end
   end
 
-  def model_name
+  def get_model_name
     '零件'
   end
 

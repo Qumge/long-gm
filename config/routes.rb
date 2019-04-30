@@ -135,5 +135,9 @@ Rails.application.routes.draw do
       patch :read
     end
   end
-  resources :home, only: [:index]
+  resources :home, only: [:index] do
+    collection do
+      get :cytoscape
+    end
+  end
 end
