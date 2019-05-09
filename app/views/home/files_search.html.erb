@@ -2,9 +2,9 @@
 <div class="row" id="product-list">
   <div class="col-md-12">
     <div class="box">
-      <%= form_tag root_path, method: :get do%>
+      <%= form_tag files_search_home_index_path, method: :get do%>
         <div class="box-header with-border">
-          <h3 class="box-title">我的文件</h3>
+          <h3 class="box-title">内容搜索</h3>
         </div>
         <div class="box-tools">
           <div class="input-group input-group-sm">
@@ -60,7 +60,7 @@
                 </td>
                 <td><%= data.name %></td>
                 <td><%= data.get_model_name %></td>
-                <td><%= simple_time_mini data.updated_at %></td>
+                <td><%= simple_time data.updated_at %></td>
                 <td><%= data.user&.name %></td>
                 <td>
                   <% if data.file_path.present? && (data.is_a?(Technology) || current_user.send(data.class.name.pluralize.downcase).include?(data))%>

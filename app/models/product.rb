@@ -22,8 +22,8 @@ class Product < ActiveRecord::Base
       scope: -> { order("id desc") }
   }
   belongs_to :user
-  belongs_to :last_user, foreign_key: :last_user_id, class_name: 'users'
-  belongs_to :file_user, foreign_key: :file_user_id, class_name: 'users'
+  belongs_to :last_user, foreign_key: :last_user_id, class_name: 'User'
+  belongs_to :file_user, foreign_key: :file_user_id, class_name: 'User'
   has_many :product_logs
   has_many :products_instances
   validates_presence_of :name, :product_no

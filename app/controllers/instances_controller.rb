@@ -1,7 +1,8 @@
 class InstancesController < ApplicationController
   before_action :set_instance, only: [:show, :edit, :update, :destroy, :show_version, :upload_file, :do_upload_file]
   before_action :set_uptoken, only: [:upload_file, :edit_file]
-  before_action :set_log, only: [:edit_file, :update_file, :apply, :do_develop_audit, :do_flow_audit, :do_active_audit, :do_failed_audit]
+  before_action :set_log, only: [:edit_file, :update_file, :apply]
+  before_action :set_audit_log, only: [:do_develop_audit, :do_flow_audit, :do_active_audit, :do_failed_audit]
   include ApplicationHelper
   def index
     @instances = Instance.search_conn(params).page(params[:page]).per(Settings.per_page)
@@ -132,6 +133,11 @@ class InstancesController < ApplicationController
 
   def set_log
     @log = current_user.instance_logs.find_by id: params[:id]
+    redirect_to instances_path, alert: '找不到数据' unless @log.present?
+  end
+
+  def set_audit_log
+    @log = InstanceLog.find_by id: params[:id]
     redirect_to instances_path, alert: '找不到数据' unless @log.present?
   end
 

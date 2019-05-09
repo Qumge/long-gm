@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   layout "cytoscape", :only => [ :cytoscape ]
-  def index
+  def files_search
     data = []
     if params[:table_search].present?
       instances = Instance.search_conn(params)
@@ -8,6 +8,14 @@ class HomeController < ApplicationController
       technologies = Technology.search_conn(params)
       data = (instances + products + technologies).sort{ |a, b| b.updated_at <=> a.updated_at }
     end
+    @datas = Kaminari.paginate_array(data).page(params[:page]).per(Settings.per_page)
+  end
+
+  def index
+    instances = current_user.instances.search_conn(params).where('instances.file_path is not null')
+    products = current_user.products.search_conn(params).where('products.file_path is not null')
+    technologies = Technology.search_conn(params)
+    data = (instances + products + technologies).sort{ |a, b| b.updated_at <=> a.updated_at }
     @datas = Kaminari.paginate_array(data).page(params[:page]).per(Settings.per_page)
   end
 

@@ -1340,7 +1340,7 @@ $.widget("ui.plupload", {
 				files.unshift(files.length);
 				files.unshift(0);
 				
-				// re-populate files array				
+				// re-populate files array
 				Array.prototype.splice.apply(self.uploader.files, files);	
 			}
 		});		

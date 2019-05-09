@@ -51,6 +51,10 @@ module ApplicationHelper
             edit: '修改工艺文件',
             update: '修改工艺文件',
             show: '工艺文件详情'
+        },
+        home: {
+            index: '我的文件',
+            files_search: '内容搜索'
         }
 
     }

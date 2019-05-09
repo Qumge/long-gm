@@ -39,10 +39,9 @@
                 <td><%= instance_log.user&.name %></td>
                 <td><%= simple_time_mini instance_log.updated_at %></td>
                 <td><%= instance_log.get_status %></td>
-                <td><%= simple_time_mini instance_log.active_at %></td>
                 <td>
                   <% if can? :do_flow_audit, :instances %>
-                    <% if instance_log.may_do_active_audit? && @current_user == instance_log.user  %>
+                    <% if instance_log.may_do_active_audit?   %>
                       <%= link_to 'JavaScript:void(0)', onclick: "active(#{instance_log.id})",class: 'btn btn-xs btn-success' do  %>
                         <i class="fa fa-circle-o"></i>同意
                       <% end %>
@@ -50,7 +49,7 @@
                   <% end %>
 
                   <% if can? :do_failed_audit, :instances %>
-                    <% if instance_log.may_do_failed_audit? && @current_user == instance_log.user  %>
+                    <% if instance_log.may_do_failed_audit?  %>
                       <%= link_to 'JavaScript:void(0)', onclick: "failed(#{instance_log.id})",class: 'btn btn-xs btn-danger' do  %>
                         <i class="fa fa-close"></i>打回
                       <% end %>

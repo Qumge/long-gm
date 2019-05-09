@@ -3,29 +3,29 @@
   <div class="box-body">
     <div class="nav-tabs-custom">
       <ul class="nav nav-tabs" data-turbolinks="false">
-        <% if can? :do_develop_audits, :products %>
+        <% if can? :do_develop_audit, :products %>
         <li><a href="#tab_1" data-toggle="tab">研发审批</a></li>
           <% end %>
-        <% if can? :do_flow_audits, :products %>
+        <% if can? :do_flow_audit, :products %>
         <li><a href="#tab_2" data-toggle="tab">流程化审批</a></li>
           <% end %>
-        <% if can? :do_active_audits, :products %>
+        <% if can? :do_active_audit, :products %>
         <li><a href="#tab_3" data-toggle="tab">最终审批</a></li>
           <% end %>
       </ul>
       <div class="tab-content">
-        <% if can? :do_develop_audits, :products %>
+        <% if can? :do_develop_audit, :products %>
         <div class="tab-pane" id="tab_1">
           <%= render 'audits/products/apply_products' %>
         </div>
           <% end %>
-        <% if can? :do_flow_audits, :products %>
+        <% if can? :do_flow_audit, :products %>
         <div class="tab-pane" id="tab_2">
           <%= render 'audits/products/develop_products' %>
         </div>
           <% end %>
         <!-- /.tab-pane -->
-        <% if can? :do_active_audits, :products %>
+        <% if can? :do_active_audit, :products %>
         <div class="tab-pane" id="tab_3">
           <%= render 'audits/products/flow_products' %>
         </div>

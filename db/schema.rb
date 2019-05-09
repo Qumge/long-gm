@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190425084025) do
+ActiveRecord::Schema.define(version: 20190508082753) do
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value",      limit: 255
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20190425084025) do
     t.datetime "last_updated_at"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
-    t.datetime "file_user_id"
+    t.integer  "file_user_id",    limit: 4
     t.datetime "active_at"
   end
 

@@ -55,6 +55,14 @@
               <th>备注</th>
               <td><%= @technology.desc %></td>
             </tr>
+            <tr>
+              <th>检验零件</th>
+              <td>
+                <% @technology.instances.each do |instance| %>
+                  <span class="label label-primary " style="padding-bottom: 2px;padding-top: 2px;"><%= instance.name %></span>
+                <% end %>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>

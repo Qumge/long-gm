@@ -61,8 +61,13 @@
       <tr>
         <th>已回复</th>
         <td>
-          <% @notice.replied_users.each do |user| %>
-            <span class="label label-primary " style="padding-bottom: 2px;padding-top: 2px;"><%= user_notice&.user&.name %></span>
+          <% @notice.replied_users.each do |user_notice| %>
+            <p class="message">
+              <a href="javascript:void(0)" class="name" style="display: block">
+                <%= user_notice&.user&.name %>:
+              </a>
+              <%= user_notice.reply %>
+            </p>
           <% end %>
         </td>
       </tr>

@@ -138,6 +138,7 @@ Rails.application.routes.draw do
   resources :home, only: [:index] do
     collection do
       get :cytoscape
+      get :files_search
     end
   end
 end

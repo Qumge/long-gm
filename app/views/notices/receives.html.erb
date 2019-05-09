@@ -37,7 +37,7 @@
           <% if @receive_notices.present? %>
           <% @receive_notices.each do |user_notice| %>
             <tr>
-              <td class="mailbox-name"><%= link_to user_notice.notice&.title, notice_path(user_notice.notice) %></td>
+              <td class="mailbox-name"><%= link_to user_notice.notice&.title, notice_path(user_notice) %></td>
               <td class="mailbox-subject"><%= user_notice.notice.sub_content %>
               </td>
               <td class="mailbox-subject"><%= user_notice.notice.need_reply ? (user_notice.replied ? '已回复' : '待回复') : '无需回复' %></td>

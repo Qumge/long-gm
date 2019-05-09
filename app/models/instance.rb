@@ -3,8 +3,8 @@ class Instance < ActiveRecord::Base
       scope: -> { order("id desc") }
   }
   belongs_to :user
-  belongs_to :last_user, foreign_key: :last_user_id, class_name: 'users'
-  belongs_to :file_user, foreign_key: :file_user_id, class_name: 'users'
+  belongs_to :last_user, foreign_key: :last_user_id, class_name: 'User'
+  belongs_to :file_user, foreign_key: :file_user_id, class_name: 'User'
   has_many :instance_logs
   has_many :products_instances, dependent: :destroy
   has_many :technology_instances, dependent: :destroy
@@ -28,6 +28,10 @@ class Instance < ActiveRecord::Base
 
   def get_model_name
     '零件'
+  end
+
+  def technology
+    technologies.order('valid_at desc, updated_at desc').first
   end
 
   class << self

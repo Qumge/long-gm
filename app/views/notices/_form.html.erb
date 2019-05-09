@@ -123,10 +123,18 @@
       function getData(){
           var array_data = $('.group_form').serializeArray();
           var data = {}
+          var user_ids = []
           for (var i=0;i<array_data.length;i++)
           {
-              data[array_data[i].name]= array_data[i].value;
+              if(array_data[i].name === 'notice[user_ids][]'){
+                  user_ids.push(array_data[i].value);
+              }else{
+                  data[array_data[i].name]= array_data[i].value;
+              }
           }
+          console.log(user_ids);
+          data['notice[user_ids][]'] = user_ids;
+          console.log(user_ids);
           console.log(data);
           return data;
       }

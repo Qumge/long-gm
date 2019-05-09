@@ -61,7 +61,7 @@
       </tr>
       <tr>
         <th>图纸变更人</th>
-        <td><%= @product&.last_user&.name %></td>
+        <td><%= @product&.file_user&.name %></td>
       </tr>
       <tr>
         <th>图纸变更时间</th>
@@ -75,6 +75,18 @@
           <% end %>
         </td>
       </tr>
+      <% if can? :cytoscape, :home %>
+        <tr>
+          <th>
+            关系图
+          </th>
+          <td>
+            <%= link_to cytoscape_home_index_path(product_id: @product.id),  class: 'btn btn-primary btn-xs', target: "view_window" do %>
+              <i class="fa fa-gg"></i>关系图
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
       </tbody>
     </table>
   </div>

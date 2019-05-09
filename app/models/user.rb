@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
 
 
   def has_role? role
-    true
+    self.role.present? && self.role.desc == role
   end
 
   def user_notice notice

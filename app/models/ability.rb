@@ -32,7 +32,7 @@ class Ability
       can :manage, :all
     end
     if user
-      can :index, :projects
+      can :index, :home
     end
     if user.present? && user.resources.present?
       user.resources.each do |resource|

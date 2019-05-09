@@ -4075,7 +4075,7 @@ define('moxie/file/FileDrop', [
 	'moxie/core/utils/Mime'
 ], function(I18n, Dom, x, Basic, Env, File, RuntimeClient, EventTarget, Mime) {
 	/**
-	Turn arbitrary DOM element to a drop zone accepting files. Converts selected files to _File_ objects, to be used 
+	Turn arbitrary DOM element to a drop zone accepting files. Converts selected files to _File_ objects, to be used
 	in conjunction with _Image_, preloaded in memory with _FileReader_ or uploaded to a server through 
 	_XMLHttpRequest_.
 

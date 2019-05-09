@@ -14,7 +14,15 @@ RailsAdmin.config do |config|
     redirect_to main_app.root_path, alert: '无权限' unless current_user.present? && current_user.has_role?('super_admin')
   end
   config.main_app_name = ["龙胜", "图文"]
-  config.included_models = ['User', 'Resource', 'Role']
+  config.included_models = ['User', 'Resource', 'Role', 'Category']
+
+  config.model 'Category' do
+    label_plural "产品类型"
+    field :name do
+      label '类型名'
+    end
+  end
+
   config.model 'User' do
     label_plural "用户"
     field :login do
@@ -31,6 +39,10 @@ RailsAdmin.config do |config|
     end
     field :name do
       label '姓名'
+    end
+    field :role do
+      associated_collection_cache_all true  # REQUIRED if you want to SORT the list as below
+      label '角色'
     end
 
   end

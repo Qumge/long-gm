@@ -25,6 +25,13 @@
           <% end %>
         </li>
       <%end %>
+      <% if can? :files_search, :home %>
+        <li class="<%= active_class params, 'home', 'files_search' %>">
+          <%= link_to files_search_home_index_path do %>
+            <i class="fa fa-search"></i> <span>全局搜索</span>
+          <% end %>
+        </li>
+      <%end %>
       <% if can? :cytoscape, :home %>
         <li class="<%= active_class params, 'home', 'cytoscape' %>">
           <%= link_to cytoscape_home_index_path, target: "view_window" do %>
@@ -62,7 +69,6 @@
           <% end %>
         </li>
       <%end %>
-
         <li class="<%= active_class params, 'notices' %>">
 
           <a href="javascript:void(0)">
@@ -90,7 +96,6 @@
             <% end %>
           </ul>
         </li>
-
       <% if current_user.has_role? 'super_admin' %>
       <li>
         <%= link_to rails_admin_path do %>

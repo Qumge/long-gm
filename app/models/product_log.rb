@@ -18,7 +18,7 @@ class ProductLog < ActiveRecord::Base
   belongs_to :product
   has_many :audits, -> {where(model_type: 'ProductLog')}, foreign_key: :model_id
 
-  STATUS = {wait: '草稿', apply: '申请中', developer: '技术已审批', flow: '流程化', active: '申请成功', failed: '申请失败'}
+  STATUS = {wait: '草稿', apply: '申请中', develop: '技术已审批', flow: '流程化', active: '申请成功', failed: '申请失败'}
 
   aasm :status do
     state :wait, :initial => true
@@ -37,7 +37,7 @@ class ProductLog < ActiveRecord::Base
       transitions :from => :flow, :to => :active, :after => Proc.new {after_active}
     end
     event :do_failed_audit do
-      transitions :from => [:apply, :developer, :flow], :to => :failed, :after => Proc.new {after_failed }
+      transitions :from => [:apply, :develop, :flow], :to => :failed, :after => Proc.new {after_failed }
     end
   end
 
