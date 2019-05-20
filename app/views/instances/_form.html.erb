@@ -6,10 +6,13 @@
   <%= simple_form_for(@instance, html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
     <div class="modal-body" >
       <%= f.input :instance_no %>
+      <%= f.input :technology_id, collection: Technology.all.collect{|t| [t.name, t.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%' } %>
       <%= f.input :name%>
       <%= f.input :norms %>
       <%= f.input :desc %>
       <%= f.input :user_ids, collection: User.all.collect{|user| [user.name, user.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%', multiple: "multiple" }, 'data-placeholder': "多选、 可输入文字检索"%>
+      <%= f.input :organization_ids, collection: Organization.all.collect{|org| [org.name, org.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%', multiple: "multiple" }, 'data-placeholder': "多选、 可输入文字检索"%>
+      <%= f.input :product_ids, collection: Product.all.collect{|product| [product.name, product.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%', multiple: "multiple" }, 'data-placeholder': "多选、 可输入文字检索"%>
     </div>
   <% end %>
 

@@ -20,7 +20,7 @@
                   <td>
                     <% if product_log.file_path.present? %>
                       <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= product_log.preview_url%>" data-file-name="<%= product_log.file_name %>">
-                        <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  product_log %>
+                        <i class="fa fa-eye"></i><%= show_file_name '文件',  product_log %>
                       </a>
                       <%= link_to product_log.preview_url, class: 'btn' do  %>
                         <i class="fa fa-download"></i>
@@ -36,13 +36,11 @@
                   <td>
                     <% if can? :apply, :products %>
                       <% if product_log.may_do_apply? && @current_user == product_log.user  %>
-                        <%= link_to 'JavaScript:void(0)', onclick: "apply(#{product_log.id})",class: 'btn btn-xs btn-success' do  %>
-                          <i class="fa fa-circle-o"></i>申请
-                        <% end %>
+                        <%= link_to '申请', apply_product_path(product_log) , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %>
                       <% end %>
                     <% end %>
 
-                    <% if can? :edit_file, :instances %>
+                    <% if can? :edit_file, :products %>
                       <% if ['wait', 'failed'].include? product_log.status %>
                         <%= link_to '图纸变更', edit_file_product_path(product_log), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-primary btn-xs'%>
                       <% end %>
@@ -62,22 +60,4 @@
     </div>
     <!-- /.box -->
   </div>
-  <script type="text/javascript">
-      function apply(id){
-          if(confirm('确认申请吗？')){
-              showSpinner();
-              $.ajax({
-                  type: 'post',
-                  url: '<%= apply_products_path %>',
-                  data: {id: id},
-                  dataType: 'script',
-                  success: function (data) {
-
-                  }
-              })
-          }
-
-      }
-
-  </script>
 </div>

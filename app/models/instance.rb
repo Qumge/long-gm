@@ -11,8 +11,10 @@ class Instance < ActiveRecord::Base
   validates_presence_of :name, :instance_no
   has_and_belongs_to_many :products, join_table: 'products_instances'
   has_and_belongs_to_many :users, join_table: 'instances_users'
+  has_and_belongs_to_many :organizations, join_table: 'instance_organizations'
   validates_uniqueness_of :name, :instance_no
   has_and_belongs_to_many :technologies, join_table: 'technology_instances'
+  belongs_to :technology
 
   def preview_url
     Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
@@ -30,9 +32,9 @@ class Instance < ActiveRecord::Base
     '零件'
   end
 
-  def technology
-    technologies.order('valid_at desc, updated_at desc').first
-  end
+  # def technology
+  #   technologies.order('valid_at desc, updated_at desc').first
+  # end
 
   class << self
     def search_conn params

@@ -41,6 +41,25 @@
         </div>
       <% end %>
 
+      <% if can? :technologies, :audits %>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h4>工艺文件审批</h4>
+
+              <p style="height: 13px;"></p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-file-text"></i>
+            </div>
+            <%= link_to technologies_audits_path, class: 'small-box-footer' do %>
+              详情 <i class="fa fa-arrow-circle-right"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
 
     </div>
 

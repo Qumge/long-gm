@@ -1,0 +1,8 @@
+<% if @flag %>
+show_flash('success', '变更成功');
+<% else %>
+show_flash('failed', '变更失败，请稍后重试');
+<% end %>
+$('#technology_logs').replaceWith('<%= j render(partial: 'technologies/technology_logs') %>');
+hideSpinner();
+$('#global-modal').modal('hide');

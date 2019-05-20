@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190508082753) do
+ActiveRecord::Schema.define(version: 20190520022536) do
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value",      limit: 255
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(version: 20190508082753) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.datetime "apply_at"
+    t.integer  "develop_id",  limit: 4
+    t.integer  "flow_id",     limit: 4
+    t.integer  "active_id",   limit: 4
+  end
+
+  create_table "instance_organizations", force: :cascade do |t|
+    t.integer  "instance_id",     limit: 4
+    t.integer  "organization_id", limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "instances", force: :cascade do |t|
@@ -73,6 +83,7 @@ ActiveRecord::Schema.define(version: 20190508082753) do
     t.datetime "updated_at",                    null: false
     t.integer  "file_user_id",    limit: 4
     t.datetime "active_at"
+    t.integer  "technology_id",   limit: 4
   end
 
   create_table "instances_users", force: :cascade do |t|
@@ -93,6 +104,16 @@ ActiveRecord::Schema.define(version: 20190508082753) do
     t.integer  "user_id",    limit: 4
   end
 
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "desc",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "ancestry",   limit: 255
+  end
+
+  add_index "organizations", ["ancestry"], name: "index_organizations_on_ancestry", using: :btree
+
   create_table "product_logs", force: :cascade do |t|
     t.integer  "product_id", limit: 4
     t.string   "file_name",  limit: 255
@@ -103,6 +124,16 @@ ActiveRecord::Schema.define(version: 20190508082753) do
     t.datetime "updated_at",             null: false
     t.datetime "active_at"
     t.datetime "apply_at"
+    t.integer  "develop_id", limit: 4
+    t.integer  "flow_id",    limit: 4
+    t.integer  "active_id",  limit: 4
+  end
+
+  create_table "product_organizations", force: :cascade do |t|
+    t.integer  "product_id",      limit: 4
+    t.integer  "organization_id", limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -120,7 +151,8 @@ ActiveRecord::Schema.define(version: 20190508082753) do
     t.datetime "updated_at",                    null: false
     t.datetime "last_updated_at"
     t.integer  "file_user_id",    limit: 4
-    t.integer  "active_at",       limit: 4
+    t.datetime "active_at"
+    t.integer  "technology_id",   limit: 4
   end
 
   create_table "products_instances", force: :cascade do |t|
@@ -160,15 +192,18 @@ ActiveRecord::Schema.define(version: 20190508082753) do
   end
 
   create_table "technologies", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "no",         limit: 255
-    t.string   "name",       limit: 255
+    t.integer  "user_id",      limit: 4
+    t.string   "no",           limit: 255
+    t.string   "name",         limit: 255
     t.datetime "valid_at"
-    t.text     "desc",       limit: 65535
-    t.string   "file_name",  limit: 255
-    t.string   "file_path",  limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text     "desc",         limit: 65535
+    t.string   "file_name",    limit: 255
+    t.string   "file_path",    limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "last_user_id", limit: 4
+    t.integer  "file_user_id", limit: 4
+    t.datetime "active_at"
   end
 
   create_table "technology_instances", force: :cascade do |t|
@@ -176,6 +211,21 @@ ActiveRecord::Schema.define(version: 20190508082753) do
     t.integer  "instance_id",   limit: 4
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+  end
+
+  create_table "technology_logs", force: :cascade do |t|
+    t.integer  "technology_id", limit: 4
+    t.string   "file_name",     limit: 255
+    t.string   "file_path",     limit: 255
+    t.integer  "user_id",       limit: 4
+    t.string   "status",        limit: 255
+    t.integer  "develop_id",    limit: 4
+    t.integer  "flow_id",       limit: 4
+    t.integer  "active_id",     limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.datetime "active_at"
+    t.datetime "apply_at"
   end
 
   create_table "user_notices", force: :cascade do |t|

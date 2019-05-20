@@ -27,7 +27,7 @@
                 <td>
                   <% if instance_log.file_path.present? %>
                     <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= instance_log.preview_url%>" data-file-name="<%= instance_log.file_name %>">
-                      <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  instance_log %>
+                      <i class="fa fa-eye"></i><%= show_file_name '文件',  instance_log %>
                     </a>
                     <%= link_to instance_log.preview_url, class: 'btn' do  %>
                       <i class="fa fa-download"></i>

@@ -1,0 +1,66 @@
+
+<div class="row">
+  <div class="table-responsive col-sm-6">
+    <table class="table">
+      <tbody>
+      <tr>
+        <th style="width:50%">产品编号</th>
+        <td><%= @technology.no %></td>
+      </tr>
+      <tr>
+        <th>产品名</th>
+        <td><%= @technology.name %></td>
+      </tr>
+      <tr>
+        <th>生效时间</th>
+        <td><%= simple_time @technology.valid_at %></td>
+      </tr>
+      <tr>
+        <th>
+          图纸
+        </th>
+        <td>
+          <% if @technology.file_path.present?%>
+            <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @technology.preview_url%>" data-file-name="<%= @technology.file_name %>">
+              <i class="fa fa-eye"></i><%= show_file_name '文件',  @technology %>
+            </a>
+            <%= link_to @technology.preview_url, class: 'btn' do  %>
+              <i class="fa fa-download"></i>
+            <% end %>
+          <% else %>
+            <%= @technology.file_name %>
+          <% end %>
+        </td>
+      </tr>
+
+
+      </tbody>
+    </table>
+  </div>
+  <div class="table-responsive col-sm-6">
+    <table class="table">
+      <tbody>
+      <tr>
+        <th>创建人</th>
+        <td><%= @technology&.user&.name %></td>
+      </tr>
+      <tr>
+        <th>创建时间</th>
+        <td><%= simple_time @technology.created_at %></td>
+      </tr>
+      <tr>
+        <th>备注</th>
+        <td><%= @technology.desc %></td>
+      </tr>
+      <tr>
+        <th>检验零件</th>
+        <td>
+          <% @technology.instances.each do |instance| %>
+            <span class="label label-primary " style="padding-bottom: 2px;padding-top: 2px;"><%= instance.name %></span>
+          <% end %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

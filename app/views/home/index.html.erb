@@ -65,7 +65,7 @@
                 <td>
                   <% if data.file_path.present? && (data.is_a?(Technology) || current_user.send(data.class.name.pluralize.downcase).include?(data))%>
                     <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= data.preview_url%>" data-file-name="<%= data.file_name %>">
-                      <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  data %>
+                      <i class="fa fa-eye"></i><%= show_file_name '文件',  data %>
                     </a>
                     <%= link_to data.preview_url, class: 'btn' do  %>
                       <i class="fa fa-download"></i>

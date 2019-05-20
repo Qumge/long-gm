@@ -1,7 +1,0 @@
-<% if @flag %>
-show_flash('success', '申请成功');
-<% else %>
-show_flash('failed', '申请失败，请稍后重试');
-<% end %>
-$('#product_logs').replaceWith('<%= j render(partial: 'products/product_logs') %>');
-hideSpinner();

@@ -1,79 +1,38 @@
 <%= render 'technologies/header' %>
-<div class="row col-md-12">
-  <div class="box ">
-    <div class="box-body">
-      <div class="row">
-        <div class="table-responsive col-sm-6">
-          <table class="table">
-            <tbody>
-            <tr>
-              <th style="width:50%">产品编号</th>
-              <td><%= @technology.no %></td>
-            </tr>
-            <tr>
-              <th>产品名</th>
-              <td><%= @technology.name %></td>
-            </tr>
-            <tr>
-              <th>生效时间</th>
-              <td><%= simple_time @technology.valid_at %></td>
-            </tr>
-            <tr>
-              <th>
-                图纸
-              </th>
-              <td>
-                <% if @technology.file_path.present?%>
-                  <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @technology.preview_url%>" data-file-name="<%= @technology.file_name %>">
-                    <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  @technology %>
-                  </a>
-                  <%= link_to @technology.preview_url, class: 'btn' do  %>
-                    <i class="fa fa-download"></i>
-                  <% end %>
-                <% else %>
-                  <%= @technology.file_name %>
-                <% end %>
-              </td>
-            </tr>
-
-
-            </tbody>
-          </table>
+<div class="row">
+  <div class="box-body">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs" data-turbolinks="false">
+        <li class="active"><a href="#tab_1" data-toggle="tab">基本信息</a></li>
+        <li><a href="#tab_2" data-toggle="tab">历史版本</a></li>
+        <li><a href="#tab_3" data-toggle="tab">图纸历史</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+          <%= render 'technologies/detail' %>
         </div>
-        <div class="table-responsive col-sm-6">
-          <table class="table">
-            <tbody>
-            <tr>
-              <th>创建人</th>
-              <td><%= @technology&.user&.name %></td>
-            </tr>
-            <tr>
-              <th>创建时间</th>
-              <td><%= simple_time @technology.created_at %></td>
-            </tr>
-            <tr>
-              <th>备注</th>
-              <td><%= @technology.desc %></td>
-            </tr>
-            <tr>
-              <th>检验零件</th>
-              <td>
-                <% @technology.instances.each do |instance| %>
-                  <span class="label label-primary " style="padding-bottom: 2px;padding-top: 2px;"><%= instance.name %></span>
-                <% end %>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+        <div class="tab-pane" id="tab_2">
+          <%= render 'technologies/versions' %>
         </div>
+        <!-- /.tab-pane -->
+        <div class="tab-pane" id="tab_3">
+          <%= render 'technologies/technology_logs' %>
+        </div>
+        <!-- /.tab-pane -->
       </div>
-
-    </div>
-    <div class="box-footer">
-      <div class="pull-right pagination-sm no-margin">
-        <%= link_to '返回', technologies_path,  class: 'btn btn-primary' %>
+      <!-- /.tab-content -->
+      <div class="modal-footer">
+        <%= link_to '图纸上传', upload_file_technology_path(@technology), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-success' if can? :upload_file, :technologies %>
+        <%= link_to '返回', technologies_path, class: 'btn btn-default' %>
       </div>
     </div>
+    <!-- nav-tabs-custom -->
 
   </div>
+
+  <!-- 初始化按钮 start -->
+  <div class="col-md-12">
+  </div>
+  <!-- 初始化按钮 end -->
+  <!-- 初始化配置 start -->
 </div>

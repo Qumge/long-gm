@@ -27,7 +27,7 @@
                 <td>
                   <% if product_log.file_path.present? %>
                     <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= product_log.preview_url%>" data-file-name="<%= product_log.file_name %>">
-                      <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  product_log %>
+                      <i class="fa fa-eye"></i><%= show_file_name '文件',  product_log %>
                     </a>
                     <%= link_to product_log.preview_url, class: 'btn' do  %>
                       <i class="fa fa-download"></i>

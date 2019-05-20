@@ -1,0 +1,69 @@
+<%= render 'audits/header' %>
+<div class="row">
+  <div class="box-body">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs" data-turbolinks="false">
+        <% if can? :do_develop_audit, :technologies %>
+        <li><a href="#tab_1" data-toggle="tab">研发审批</a></li>
+          <% end %>
+        <% if can? :do_flow_audit, :technologies %>
+        <li><a href="#tab_2" data-toggle="tab">流程化审批</a></li>
+          <% end %>
+        <% if can? :do_active_audit, :technologies %>
+        <li><a href="#tab_3" data-toggle="tab">最终审批</a></li>
+          <% end %>
+      </ul>
+      <div class="tab-content">
+        <% if can? :do_develop_audit, :technologies %>
+        <div class="tab-pane" id="tab_1">
+          <%= render 'audits/technologies/apply_technologies' %>
+        </div>
+          <% end %>
+        <% if can? :do_flow_audit, :technologies %>
+        <div class="tab-pane" id="tab_2">
+          <%= render 'audits/technologies/develop_technologies' %>
+        </div>
+          <% end %>
+        <!-- /.tab-pane -->
+        <% if can? :do_active_audit, :technologies %>
+        <div class="tab-pane" id="tab_3">
+          <%= render 'audits/technologies/flow_technologies' %>
+        </div>
+          <% end %>
+        <!-- /.tab-pane -->
+      </div>
+      <!-- /.tab-content -->
+      <div class="modal-footer">
+        <%= link_to '返回', audits_path, class: 'btn btn-default' %>
+      </div>
+    </div>
+    <!-- nav-tabs-custom -->
+
+  </div>
+
+  <!-- 初始化按钮 start -->
+  <div class="col-md-12">
+  </div>
+  <!-- 初始化按钮 end -->
+  <!-- 初始化配置 start -->
+</div>
+<script type="text/javascript">
+  $(function(){
+      $('.nav-tabs li a').first().click();
+  })
+  function failed(id){
+      if(confirm('确认打回吗？')){
+          showSpinner();
+          $.ajax({
+              type: 'post',
+              url: '<%= do_failed_audit_technologies_path %>',
+              data: {id: id},
+              dataType: 'script',
+              success: function (data) {
+
+              }
+          })
+      }
+
+  }
+</script>

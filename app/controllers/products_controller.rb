@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy, :show_version, :upload_file, :do_upload_file]
   before_action :set_uptoken, only: [:upload_file, :edit_file]
-  before_action :set_log, only: [:edit_file, :update_file, :apply]
+  before_action :set_log, only: [:edit_file, :update_file, :apply, :do_apply]
   before_action :set_audit_log, only: [:do_develop_audit, :do_flow_audit, :do_active_audit, :do_failed_audit]
   include ApplicationHelper
   def index
@@ -44,7 +44,8 @@ class ProductsController < ApplicationController
   end
 
   def do_upload_file
-    ProductLog.create product: @product, file_path: params[:path], file_name: params[:file_name], user: current_user
+    @log = ProductLog.new product: @product, file_path: params[:path], file_name: params[:file_name], user: current_user
+    @log.save validate: false
     render js: 'location.reload()'
   end
 
@@ -54,10 +55,18 @@ class ProductsController < ApplicationController
   end
 
   def apply
+    render layout: false
+  end
+
+  def do_apply
     @product = @log.product
     begin
-      @log.do_apply!
-      @flag = true
+      if @log.update log_permit
+        @log.do_apply!
+        @flag = true
+      else
+        @flag = false
+      end
     rescue => e
       @flag = false
     end
@@ -69,7 +78,7 @@ class ProductsController < ApplicationController
 
   def update_file
     @product = @log.product
-    @flag = @log.update file_path: params[:path], file_name: params[:file_name]
+    @flag = @log.update_columns file_path: params[:path], file_name: params[:file_name]
   end
 
   def do_develop_audit
@@ -123,7 +132,11 @@ class ProductsController < ApplicationController
   private
 
   def product_permit
-    params.require('product').permit(:category_id,:product_no, :name, :norms, :desc, instance_ids: [], user_ids: [])
+    params.require('product').permit(:category_id,:product_no, :name, :norms, :desc, :technology_id,instance_ids: [], user_ids: [], organization_ids: [])
+  end
+
+  def log_permit
+    params.require('product_log').permit(:develop_id, :flow_id, :active_id)
   end
 
   def set_product

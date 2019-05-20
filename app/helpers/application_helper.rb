@@ -69,6 +69,6 @@ module ApplicationHelper
   end
 
   def show_file_name default_name, file
-    file.file_name.size > 10 ? "#{default_name}_#{simple_time file.created_at}" : file.file_name
+    file.file_name.size > 10 ? "#{default_name}_#{file.file_name[0..10]}" : file.file_name
   end
 end

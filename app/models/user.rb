@@ -29,14 +29,32 @@ class User < ActiveRecord::Base
   belongs_to :role
   has_and_belongs_to_many :instances, join_table: 'instances_users'
   has_and_belongs_to_many :products, join_table: 'products_users'
+  has_many :develop_instance_logs, foreign_key: :develop_id, class_name: 'InstanceLog'
+  has_many :flow_instance_logs, foreign_key: :flow_id, class_name: 'InstanceLog'
+  has_many :active_instance_logs, foreign_key: :active_id, class_name: 'InstanceLog'
+
+  has_many :develop_product_logs, foreign_key: :develop_id, class_name: 'ProductLog'
+  has_many :flow_product_logs, foreign_key: :flow_id, class_name: 'ProductLog'
+  has_many :active_product_logs, foreign_key: :active_id, class_name: 'ProductLog'
+
+  has_many :develop_technology_logs, foreign_key: :develop_id, class_name: 'TechnologyLog'
+  has_many :flow_technology_logs, foreign_key: :flow_id, class_name: 'TechnologyLog'
+  has_many :active_technology_logs, foreign_key: :active_id, class_name: 'TechnologyLog'
+
   has_many :instance_logs
   has_many :product_logs
+  has_many :technology_logs
   has_many :user_notices
   has_many :send_notices, class_name: 'Notice'
   has_and_belongs_to_many :notices, join_table: 'user_notices'
+
   devise :database_authenticatable, #:registerable,
          :recoverable, :rememberable, :validatable
 
+
+  def audit_users action, target
+    User.joins(role: :resources).where('resources.target = ? and resources.action = ?  and users.id != ?', target, "do_#{action}_audit", self.id)
+  end
 
   def has_role? role
     self.role.present? && self.role.desc == role
@@ -51,12 +69,18 @@ class User < ActiveRecord::Base
   end
 
   def has_product_log_resource?
-    self.role.present? && self.role.resources.find_by(name: '产品-所有文件记录')
+    self.has_role?('super_admin') || (self.role.present? && self.role.resources.find_by(name: '产品-所有文件记录'))
   end
 
+
   def has_instance_log_resource?
-    self.role.present? && self.role.resources.find_by(name: '零件-所有文件记录')
+    self.has_role?('super_admin') || (self.role.present? && self.role.resources.find_by(name: '零件-所有文件记录'))
   end
+
+  def has_technology_log_resource?
+    self.has_role?('super_admin') || (self.role.present? && self.role.resources.find_by(name: '工艺文件-所有文件记录'))
+  end
+
 
 
 end

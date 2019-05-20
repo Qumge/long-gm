@@ -14,7 +14,7 @@ RailsAdmin.config do |config|
     redirect_to main_app.root_path, alert: '无权限' unless current_user.present? && current_user.has_role?('super_admin')
   end
   config.main_app_name = ["龙胜", "图文"]
-  config.included_models = ['User', 'Resource', 'Role', 'Category']
+  config.included_models = ['User', 'Resource', 'Role', 'Category', 'Organization']
 
   config.model 'Category' do
     label_plural "产品类型"
@@ -39,6 +39,10 @@ RailsAdmin.config do |config|
     end
     field :name do
       label '姓名'
+    end
+    field :organization do
+      associated_collection_cache_all true  # REQUIRED if you want to SORT the list as below
+      label '部门'
     end
     field :role do
       associated_collection_cache_all true  # REQUIRED if you want to SORT the list as below
@@ -71,6 +75,21 @@ RailsAdmin.config do |config|
     field :target do
       label '模块'
     end
+  end
+
+  config.model 'Organization' do
+    label '组织架构'
+    label_plural "组织架构"
+    field :name do
+      label '组织名'
+    end
+    field :desc do
+      label '备注'
+    end
+    nestable_tree({
+                      live_update: :only
+                  })
+
   end
   ## == Cancan ==
   # config.authorize_with :cancan

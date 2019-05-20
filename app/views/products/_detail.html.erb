@@ -34,7 +34,7 @@
         <td>
           <% if @product.file_path.present? && current_user.products.include?(@product)%>
             <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @product.preview_url%>" data-file-name="<%= @product.file_name %>">
-              <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  @product %>
+              <i class="fa fa-eye"></i><%= show_file_name '文件',  @product %>
             </a>
             <%= link_to @product.preview_url, class: 'btn' do  %>
               <i class="fa fa-download"></i>

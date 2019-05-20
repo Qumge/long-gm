@@ -24,13 +24,18 @@
                   <td><%= simple_time_mini version.created_at %></td>
                   <td><%= version.reify&.file_user&.name %></td>
                   <td>
-                    <% if version.reify.file_path.present? && current_user.products.include?(@product) %>
-                    <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= version.reify.preview_url%>" data-file-name="<%= version.reify.file_name %>">
-                      <i class="fa fa-eye"></i><%= show_file_name '图纸文件',  version.reify %>
-                    </a>
-                      <%= link_to version.reify.preview_url, class: 'btn' do  %>
-                        <i class="fa fa-download"></i>
+                    <% if version.reify.file_path.present?  %>
+                      <% if current_user.instances.include?(@instance) %>
+                        <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= version.reify.preview_url%>" data-file-name="<%= version.reify.file_name %>">
+                          <i class="fa fa-eye"></i><%= show_file_name '文件',  version.reify %>
+                        </a>
+                        <%= link_to version.reify.preview_url, class: 'btn' do  %>
+                          <i class="fa fa-download"></i>
+                        <% end %>
+                      <% else %>
+                        <%= show_file_name '文件',  version.reify %>
                       <% end %>
+
                     <% end %>
                   </td>
                 </tr>

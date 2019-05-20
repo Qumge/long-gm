@@ -17,6 +17,7 @@ class ProductLog < ActiveRecord::Base
   belongs_to :user
   belongs_to :product
   has_many :audits, -> {where(model_type: 'ProductLog')}, foreign_key: :model_id
+  validates_presence_of :develop_id, :flow_id, :active_id
 
   STATUS = {wait: '草稿', apply: '申请中', develop: '技术已审批', flow: '流程化', active: '申请成功', failed: '申请失败'}
 

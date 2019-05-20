@@ -1,0 +1,7 @@
+<% if @flag %>
+show_flash('success', '申请成功');
+location.reload()
+<% else %>
+$('#form').replaceWith('<%= j render(partial: 'technologies/apply_form') %>');
+<% end %>
+hideSpinner();

@@ -26,8 +26,10 @@ class Product < ActiveRecord::Base
   belongs_to :file_user, foreign_key: :file_user_id, class_name: 'User'
   has_many :product_logs
   has_many :products_instances
+  belongs_to :technology
   validates_presence_of :name, :product_no
   has_and_belongs_to_many :instances, join_table: 'products_instances'
+  has_and_belongs_to_many :organizations, join_table: 'product_organizations'
   has_and_belongs_to_many :users, join_table: 'products_users'
   validates_uniqueness_of :name, :product_no
 

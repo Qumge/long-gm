@@ -39,18 +39,24 @@ zh-CN:
         category_id: '产品类型'
         instance_ids: '关联零件'
         user_ids: '图纸可见人员'
+        technology_id: '工艺文件'
+        organization_ids: '图纸可见部门'
       instance:
         instance_no: '零件编号'
         name: '零件名'
         norms: '规格尺寸'
         desc: '备注'
         user_ids: '图纸可见人员'
+        technology_id: '工艺文件'
+        product_ids: '关联产品'
+        organization_ids: '图纸可见部门'
       technology:
         No: '文件编号'
         name: '文件名'
         valid_at: '生效时间'
         desc: '备注'
         instance_ids: '关联零件'
+        product_ids: '关联产品'
       notice:
         title: '标题'
         content: '内容'
@@ -58,6 +64,18 @@ zh-CN:
         need_reply: '需要回复'
       user_notice:
         reply: '回复内容'
+      instance_log:
+        develop_id: '研发审批'
+        flow_id: '流程化审批'
+        active_id: '最终审批'
+      product_log:
+        develop_id: '研发审批'
+        flow_id: '流程化审批'
+        active_id: '最终审批'
+      technology_log:
+        develop_id: '研发审批'
+        flow_id: '流程化审批'
+        active_id: '最终审批'
 
 
 

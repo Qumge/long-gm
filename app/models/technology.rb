@@ -1,12 +1,27 @@
 class Technology < ActiveRecord::Base
-  has_and_belongs_to_many :instances, join_table: 'technology_instances'
+  has_paper_trail versions: {
+      scope: -> { order("id desc") }
+  }
+  has_many :instances
+  has_many :products
+  has_many :technology_logs
   belongs_to :user
+  belongs_to :last_user, foreign_key: :last_user_id, class_name: 'User'
+  belongs_to :file_user, foreign_key: :file_user_id, class_name: 'User'
   validates_uniqueness_of :name, :no
   validates_presence_of :name, :no
-  has_many :technology_instances, dependent: :destroy
+  #has_many :technology_instances, dependent: :destroy
 
   def preview_url
     Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
+  end
+
+  def view_logs user
+    if user.has_technology_log_resource?
+      self.technology_logs
+    else
+      self.technology_logs.where(user: user)
+    end
   end
 
   def get_model_name

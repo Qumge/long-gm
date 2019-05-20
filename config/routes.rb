@@ -89,9 +89,10 @@ Rails.application.routes.draw do
       patch :do_upload_file
       get :edit_file
       patch :update_file
+      get :apply
+      patch :do_apply
     end
     collection do
-      post :apply
       post :do_develop_audit
       post :do_flow_audit
       post :do_active_audit
@@ -106,9 +107,10 @@ Rails.application.routes.draw do
       patch :do_upload_file
       get :edit_file
       patch :update_file
+      get :apply
+      patch :do_apply
     end
     collection do
-      post :apply
       post :do_develop_audit
       post :do_flow_audit
       post :do_active_audit
@@ -118,11 +120,28 @@ Rails.application.routes.draw do
 
   resources :audits do
     collection do
-      get 'products'
-      get 'instances'
+      get :products
+      get :instances
+      get :technologies
     end
   end
-  resources :technologies
+  resources :technologies do
+    member do
+      get :show_version
+      get :upload_file
+      patch :do_upload_file
+      get :edit_file
+      patch :update_file
+      get :apply
+      patch :do_apply
+    end
+    collection do
+      post :do_develop_audit
+      post :do_flow_audit
+      post :do_active_audit
+      post :do_failed_audit
+    end
+  end
   resources :notices do
     collection do
       get :receives
@@ -139,6 +158,7 @@ Rails.application.routes.draw do
     collection do
       get :cytoscape
       get :files_search
+      get :stl
     end
   end
 end
