@@ -4,5 +4,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
+  before_action :my_notices
+
+  def my_notices
+    @unread_notices = current_user.unread_notices
+    @unreply_notices = current_user.unreply_notices
+  end
 
 end

@@ -69,6 +69,13 @@
           <% end %>
         </li>
       <%end %>
+      <% if can? :index, :matters %>
+        <li class="<%= active_class params, 'matters' %>">
+          <%= link_to matters_path do %>
+            <i class="fa  fa-file-excel-o"></i> <span>Bom单</span>
+          <% end %>
+        </li>
+      <%end %>
         <li class="<%= active_class params, 'notices' %>">
 
           <a href="javascript:void(0)">
@@ -76,6 +83,12 @@
             <span>通知</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
+              <% if @unread_notices.size > 0 %>
+              <small class="label pull-right bg-yellow"><%= @unread_notices.size %></small>
+                <% end %>
+              <% if @unreply_notices.size > 0 %>
+              <small class="label pull-right bg-red"><%= @unreply_notices.size %></small>
+              <% end %>
             </span>
           </a>
           <ul class="treeview-menu">

@@ -1,0 +1,15 @@
+<% content_for :content_header do %>
+  <h1>
+    产品
+    <small><%= get_title params %></small>
+
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <%=link_to matters_path do %>
+        <i class="fa fa-dashboard"></i> Bom单
+      <% end %>
+    </li>
+    <li class="active"><%= get_title params %></li>
+  </ol>
+<% end %>

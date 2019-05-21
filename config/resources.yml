@@ -72,6 +72,20 @@ notices:
   edit: '通知-编辑信息界面'
   update: '通知-编辑信息'
   show: '通知-详情'
+matters:
+  index: 'Bom单-列表'
+  show: 'Bom单-详情'
+  new: 'Bom单-添加界面'
+  create: 'Bom单-添加'
+  edit: 'Bom单-编辑界面'
+  update: 'Bom单-编辑'
+  destroy: 'Bom单-删除'
+  upload_file: 'Bom单-上传文件界面'
+  do_upload_file: 'Bom单-上传文件'
+  notices: 'Bom单-流转通知界面'
+  send_notice: 'Bom单-流转通知'
+  countersign: 'Bom单-发起会签'
+  agree: 'Bom单-确认会签'
 
 
 

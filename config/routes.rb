@@ -161,4 +161,15 @@ Rails.application.routes.draw do
       get :stl
     end
   end
+
+  resources :matters do
+    member do
+      get :upload_file
+      patch :do_upload_file
+      get :notices
+      patch :send_notice
+      patch :countersign
+      patch :agree
+    end
+  end
 end

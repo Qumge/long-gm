@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="table-responsive col-sm-6">
+    <table class="table">
+      <tbody>
+      <tr>
+        <th style="width:50%">名称</th>
+        <td><%= @matter.name %></td>
+      </tr>
+      <tr>
+        <th style="width:50%">创建人</th>
+        <td><%= @matter.user&.name %></td>
+      </tr>
+
+      <tr>
+        <th style="width:50%">文件最后变更人</th>
+        <td><%= @matter.file_user&.name %></td>
+      </tr>
+
+      <tr>
+        <th style="width:50%">文件变更时间</th>
+        <td><%= simple_time_mini @matter.last_update_at %></td>
+      </tr>
+
+      <tr>
+        <th>
+          文件
+        </th>
+        <td>
+          <% if @matter.file_path.present?%>
+            <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @matter.preview_url%>" data-file-name="<%= @matter.file_name %>">
+              <i class="fa fa-eye"></i><%= show_file_name '文件',  @matter %>
+            </a>
+            <%= link_to @matter.preview_url, class: 'btn' do  %>
+              <i class="fa fa-download"></i>
+            <% end %>
+          <% else %>
+            <%= @matter.file_name %>
+          <% end %>
+        </td>
+      </tr>
+
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-responsive col-sm-6">
+    <table class="table">
+      <tbody>
+      <tr>
+        <th style="width:50%">状态</th>
+        <td><%= @matter.get_status %></td>
+      </tr>
+      <tr>
+        <th style="width:50%">会签发起人</th>
+        <td><%= @matter.countersign_user&.name %></td>
+      </tr>
+      <tr>
+        <th style="width:50%">会签发起时间</th>
+        <td><%= simple_time_mini @matter.countersign_at %></td>
+      </tr>
+      <tr>
+        <th>备注</th>
+        <td><%= @matter.desc %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  </div>

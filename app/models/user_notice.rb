@@ -9,6 +9,8 @@ class UserNotice < ActiveRecord::Base
         self.all
       end
     end
+
   end
+
 
 end

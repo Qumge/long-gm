@@ -50,6 +50,8 @@ zh-CN:
         technology_id: '工艺文件'
         product_ids: '关联产品'
         organization_ids: '图纸可见部门'
+        parent_id: '父节点'
+        instance_category_id: '物料属性'
       technology:
         No: '文件编号'
         name: '文件名'
@@ -76,6 +78,9 @@ zh-CN:
         develop_id: '研发审批'
         flow_id: '流程化审批'
         active_id: '最终审批'
+      matter:
+        name: '名称'
+        desc: '备注'
 
 
 

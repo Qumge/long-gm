@@ -10,6 +10,13 @@
         <th >标题</th>
         <td><%= @notice.title %></td>
       </tr>
+
+      <tr>
+        <th >关联模块</th>
+        <td>
+        <%=link_to @notice.get_model&.name, model_url(@notice) if @notice.get_model.present? %>
+        </td>
+      </tr>
       <tr>
         <th>内容</th>
         <td><%= @notice.content %></td>

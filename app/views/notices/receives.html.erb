@@ -40,7 +40,7 @@
               <td class="mailbox-name"><%= link_to user_notice.notice&.title, notice_path(user_notice) %></td>
               <td class="mailbox-subject"><%= user_notice.notice.sub_content %>
               </td>
-              <td class="mailbox-subject"><%= user_notice.notice.need_reply ? (user_notice.replied ? '已回复' : '待回复') : '无需回复' %></td>
+              <td class="mailbox-subject"><%= user_notice.notice.need_reply ? (user_notice.replied ? '已回复' : '待回复') : (user_notice.readed ? '已读' : '未读') %></td>
               <td class="mailbox-attachment">
                 <% if user_notice&.notice&.file&.present? %>
                   <i class="fa fa-paperclip"></i>

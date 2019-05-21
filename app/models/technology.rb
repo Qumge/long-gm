@@ -2,6 +2,7 @@ class Technology < ActiveRecord::Base
   has_paper_trail versions: {
       scope: -> { order("id desc") }
   }
+  has_many :notices, -> {where(model_type: 'Technology')}, class_name: 'Notice', foreign_key: :model_id
   has_many :instances
   has_many :products
   has_many :technology_logs
@@ -37,6 +38,10 @@ class Technology < ActiveRecord::Base
                                     "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
       end
       technologies
+    end
+
+    def get_model_name
+      '工艺文件'
     end
   end
 

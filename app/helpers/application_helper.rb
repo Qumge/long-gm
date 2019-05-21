@@ -71,4 +71,12 @@ module ApplicationHelper
   def show_file_name default_name, file
     file.file_name.size > 10 ? "#{default_name}_#{file.file_name[0..10]}" : file.file_name
   end
+
+  def associated_models
+    Product.all + Instance.all + Technology.all + Matter.all
+  end
+
+  def model_url model
+    send "#{model.model_type.downcase}_path", model.model_id
+  end
 end

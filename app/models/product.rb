@@ -21,6 +21,7 @@ class Product < ActiveRecord::Base
   has_paper_trail versions: {
       scope: -> { order("id desc") }
   }
+  has_many :notices, -> {where(model_type: 'Product')}, class_name: 'Notice', foreign_key: :model_id
   belongs_to :user
   belongs_to :last_user, foreign_key: :last_user_id, class_name: 'User'
   belongs_to :file_user, foreign_key: :file_user_id, class_name: 'User'
@@ -60,6 +61,10 @@ class Product < ActiveRecord::Base
                                   "%#{params[:table_search]}%")
       end
       products
+    end
+
+    def get_model_name
+      '产品'
     end
   end
 

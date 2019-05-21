@@ -6,6 +6,7 @@
   <%= simple_form_for(@notice, html: {class: 'form-horizontal group_form'}, wrapper: :horizontal_form) do |f| %>
     <div class="modal-body" >
       <%= f.input :title %>
+      <%= f.input :model_val, label: '关联模块', as: :select, collection: associated_models.collect{|model| ["#{model.class.get_model_name} / #{model.name}", "#{model.class.name}_#{model.id}"]}, input_html: { class: 'select2 form-control'} %>
       <%= f.input :content %>
       <%= f.input :need_reply, as: :select, collection: [['否', 0], ['是', 1]], include_blank: false %>
       <div class="form-group row string optional train_attachment">

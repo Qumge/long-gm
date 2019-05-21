@@ -5,7 +5,7 @@ class InstancesController < ApplicationController
   before_action :set_audit_log, only: [:do_develop_audit, :do_flow_audit, :do_active_audit, :do_failed_audit]
   include ApplicationHelper
   def index
-    @instances = Instance.search_conn(params).page(params[:page]).per(Settings.per_page)
+    @instances = Instance.search_conn(params).order('updated_at desc').page(params[:page]).per(Settings.per_page)
   end
 
   def new
@@ -132,7 +132,7 @@ class InstancesController < ApplicationController
   private
 
   def instance_permit
-    params.require('instance').permit(:instance_no, :name, :norms, :desc, :technology_id, user_ids: [], product_ids: [], organization_ids: [])
+    params.require('instance').permit(:instance_no, :name, :norms, :parent_id,  :desc, :instance_category_id, :technology_id, user_ids: [], product_ids: [], organization_ids: [])
   end
 
   def log_permit

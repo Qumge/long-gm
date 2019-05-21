@@ -55,7 +55,7 @@ class NoticesController < ApplicationController
   end
 
   def notice_permit
-    params.require(:notice).permit(:title, :content, :need_reply, user_ids: [])
+    params.require(:notice).permit(:title, :content, :model_val,:need_reply, user_ids: [])
   end
 
   def set_user_notice

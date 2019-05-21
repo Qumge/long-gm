@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="table-responsive col-sm-10">
+    <div class="box-body">
+      <table class="table table-bordered">
+        <tr>
+          <th>会签人员</th>
+          <th>会签时间</th>
+          <th>状态</th>
+          <th></th>
+        </tr>
+        <% @matter.user_matters.each do |user_matter| %>
+          <tr>
+            <td><%= user_matter.user&.name %></td>
+            <td><%= simple_time_mini user_matter.updated_at %></td>
+            <td><%= user_matter.format_agree %></td>
+            <td>
+              <% if current_user == user_matter.user && user_matter.format_agree == '待确认' %>
+                <%= button_tag '会签', class: 'btn btn-success commit', id: 'agree' if can? :countersign, :matters %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript">
+      $(function(){
+          $('#agree').click(function(){
+              if(confirm('确认同意会签吗？')){
+                  showSpinner();
+                  $.ajax({
+                      type: "PATCH",
+                      url: '<%= agree_matter_path @matter %>',
+                      dataType: 'script',
+                      async: false,
+                      error: function(request) {
+                          alert("Connection error");
+                      },
+                      success: function(data) {
+                          //接收后台返回的结果
+                      }
+                  });
+              }
+          });
+      });
+  </script>
+</div>

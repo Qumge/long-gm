@@ -1,0 +1,64 @@
+<%= render 'matters/header' %>
+<div class="row">
+  <div class="box-body">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs" data-turbolinks="false">
+        <li class="active"><a href="#tab_1" data-toggle="tab">基本信息</a></li>
+        <li><a href="#tab_2" data-toggle="tab">文件历史</a></li>
+        <% if @matter.status != 'circulation' %>
+        <li><a href="#tab_3" data-toggle="tab">会签</a></li>
+        <% end %>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+          <%= render 'matters/detail' %>
+        </div>
+        <div class="tab-pane" id="tab_2">
+          <%= render 'matters/versions' %>
+        </div>
+        <% if @matter.status != 'circulation' %>
+        <div class="tab-pane" id="tab_3">
+          <%= render 'matters/countersign' %>
+        </div>
+        <% end %>
+      </div>
+      <!-- /.tab-content -->
+      <div class="modal-footer">
+        <%= link_to '上传bom单', upload_file_matter_path(@matter), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-success' if can? :upload_file, :matters %>
+        <%= link_to '流转通知', notices_matter_path(@matter), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-primary'  if(can?(:notices, :matters) && @matter.status == 'circulation')%>
+
+        <%= button_tag '发起会签', class: 'btn btn-danger commit', id: 'countersign' if(can?(:countersign, :matters) && @matter.status == 'circulation')%>
+        <%= link_to '返回', matters_path, class: 'btn btn-default' %>
+      </div>
+    </div>
+    <!-- nav-tabs-custom -->
+
+  </div>
+
+  <!-- 初始化按钮 start -->
+  <div class="col-md-12">
+  </div>
+  <!-- 初始化按钮 end -->
+  <!-- 初始化配置 start -->
+  <script type="text/javascript">
+      $(function(){
+          $('#countersign').click(function(){
+              if(confirm('确认发起会签吗？')){
+                  showSpinner();
+                  $.ajax({
+                      type: "PATCH",
+                      url: '<%= countersign_matter_path @matter %>',
+                      dataType: 'script',
+                      async: false,
+                      error: function(request) {
+                          alert("Connection error");
+                      },
+                      success: function(data) {
+                          //接收后台返回的结果
+                      }
+                  });
+              }
+          });
+      });
+  </script>
+</div>

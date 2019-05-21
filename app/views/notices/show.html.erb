@@ -12,6 +12,12 @@
         <h5>发件人: <%= @user_notice&.notice&.user&.name %>
           <span class="mailbox-read-time pull-right"><%= simple_time_mini @user_notice.created_at %></span></h5>
       </div>
+
+      <div class="mailbox-read-info">
+
+        <h5>关联模块: <%=link_to @user_notice&.notice.get_model&.name, model_url(@user_notice&.notice) if @user_notice&.notice.get_model.present? %>
+        </h5>
+      </div>
       <!-- /.mailbox-read-info -->
       <!-- /.mailbox-controls -->
       <div class="mailbox-controls with-border text-center">

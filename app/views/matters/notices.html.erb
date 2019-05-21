@@ -1,0 +1,41 @@
+<div id="form">
+  <div class="modal-header" style="padding:5px; padding-left: 15px;">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="file-modal-label"></h4>
+  </div>
+  <%= simple_form_for(@matter, html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
+    <div class="modal-body" >
+      <div class="form-group row string required user_ids">
+        <label class="col-sm-3 col-form-label string required" for="user_ids">通知人员</label>
+        <div class="col-sm-9">
+          <%= select_tag :user_ids, options_for_select(User.all.collect{|user| ["#{user.organization&.name} / #{user.name}", user.id]}, params[:user_ids]), class: 'form-control select2 ', multiple: "multiple", style: 'width:100%' %>
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+
+  <div class="modal-footer">
+    <%= button_tag '保存', class: 'btn btn-primary commit', data: { disable_with: '保存中' } %>
+    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+  </div>
+</div>
+<script>
+  $(function(){
+      $('.commit').click(function(){
+          if($('#user_ids').val()){
+              $.ajax({
+                  type: 'PATCH',
+                  url: '<%= send_notice_matter_path @matter  %>',
+                  data: {user_ids: $('#user_ids').val()},
+                  dataType: 'script',
+                  success: function (data) {
+
+                  }
+              })
+          }
+      });
+
+      $('.select2').select2();
+  });
+</script>

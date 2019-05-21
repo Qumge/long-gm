@@ -11,6 +11,14 @@
         <td><%= @instance.name %></td>
       </tr>
       <tr>
+        <th>父节点</th>
+        <td><%= @instance.parent&.name %></td>
+      </tr>
+      <tr>
+        <th>物料属性</th>
+        <td><%= @instance.instance_category&.name %></td>
+      </tr>
+      <tr>
         <th>规格</th>
         <td><%= @instance.norms %></td>
       </tr>

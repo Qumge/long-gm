@@ -14,12 +14,22 @@ RailsAdmin.config do |config|
     redirect_to main_app.root_path, alert: '无权限' unless current_user.present? && current_user.has_role?('super_admin')
   end
   config.main_app_name = ["龙胜", "图文"]
-  config.included_models = ['User', 'Resource', 'Role', 'Category', 'Organization']
+  config.included_models = ['User', 'Resource', 'Role', 'Category', 'InstanceCategory', 'Organization']
 
   config.model 'Category' do
     label_plural "产品类型"
     field :name do
       label '类型名'
+    end
+  end
+
+  config.model 'InstanceCategory' do
+    label_plural "物料属性"
+    field :name do
+      label '属性名'
+    end
+    field :desc do
+      label '备注'
     end
   end
 

@@ -1,8 +1,8 @@
 <% if @flag %>
 $('#global-modal').modal('hide');
-show_flash('success', '创建成功')
+show_flash('success', '修改成功')
 location.reload();
 <% else %>
 hideSpinner();
-$('#form').html('<%= j render "/technologies/form"%>');
+$('#form').html('<%= j render "/matters/form"%>');
 <% end %>

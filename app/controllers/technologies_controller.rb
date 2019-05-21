@@ -5,7 +5,7 @@ class TechnologiesController < ApplicationController
   before_action :set_log, only: [:edit_file, :update_file, :apply, :do_apply]
   before_action :set_audit_log, only: [:do_develop_audit, :do_flow_audit, :do_active_audit, :do_failed_audit]
   def index
-    @technologies = Technology.search_conn(params).page(params[:page]).per(Settings.per_page)
+    @technologies = Technology.search_conn(params).order('updated_at desc').page(params[:page]).per(Settings.per_page)
   end
 
   def new

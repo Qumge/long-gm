@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered">
+          <tr>
+            <th>名称</th>
+            <th>被变更时间</th>
+            <th>文件创建人</th>
+            <th>文件</th>
+          </tr>
+          <tr>
+            <% if @matter.versions.present? %>
+              <% @matter.versions.each do |version| %>
+              <% if version.reify.present? %>
+                <tr>
+                  <td><%= version.reify.name%></td>
+                  <td><%= simple_time_mini version.created_at %></td>
+                  <td><%= version.reify&.file_user&.name %></td>
+                  <td>
+                    <% if version.reify.file_path.present?  %>
+                        <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= version.reify.preview_url%>" data-file-name="<%= version.reify.file_name %>">
+                          <i class="fa fa-eye"></i><%= show_file_name '文件',  version.reify %>
+                        </a>
+                        <%= link_to version.reify.preview_url, class: 'btn' do  %>
+                          <i class="fa fa-download"></i>
+                        <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="5" align="center">没有可显示的内容</td>
+            </tr>
+          <% end %>
+          </tr>
+        </table>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>

@@ -1,5 +1,6 @@
 <% if @flag %>
   $('#global-modal').modal('hide');
+show_flash('success', '创建成功')
   location.reload();
 <% else %>
 hideSpinner();

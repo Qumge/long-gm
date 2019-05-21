@@ -2,19 +2,26 @@ class Instance < ActiveRecord::Base
   has_paper_trail versions: {
       scope: -> { order("id desc") }
   }
+  has_ancestry
+
   belongs_to :user
   belongs_to :last_user, foreign_key: :last_user_id, class_name: 'User'
   belongs_to :file_user, foreign_key: :file_user_id, class_name: 'User'
+  belongs_to :instance_category
+  belongs_to :technology
+
   has_many :instance_logs
   has_many :products_instances, dependent: :destroy
   has_many :technology_instances, dependent: :destroy
-  validates_presence_of :name, :instance_no
+  has_many :notices, -> {where(model_type: 'Instance')}, class_name: 'Notice', foreign_key: :model_id
+
   has_and_belongs_to_many :products, join_table: 'products_instances'
   has_and_belongs_to_many :users, join_table: 'instances_users'
   has_and_belongs_to_many :organizations, join_table: 'instance_organizations'
-  validates_uniqueness_of :name, :instance_no
   has_and_belongs_to_many :technologies, join_table: 'technology_instances'
-  belongs_to :technology
+
+  validates_presence_of :name, :instance_no
+  validates_uniqueness_of :name, :instance_no
 
   def preview_url
     Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
@@ -45,6 +52,10 @@ class Instance < ActiveRecord::Base
                                   "%#{params[:table_search]}%")
       end
       instances
+    end
+
+    def get_model_name
+      '零件'
     end
   end
 end
