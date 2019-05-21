@@ -25,6 +25,7 @@
 //= require slimScroll
 //= require cytoscape
 //= require three2
+//= require bootstrap-treeview
 //= require_tree .
 
 

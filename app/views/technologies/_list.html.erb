@@ -26,57 +26,59 @@
       <% end %>
       <!-- /.box-header -->
       <div class="box-body">
-        <table class="table table-bordered">
-          <tr>
-            <th>文件编号</th>
-            <th>文件名</th>
-            <th>生效时间</th>
-            <th>创建人</th>
-            <th></th>
-          </tr>
-          <tr>
-            <% if technologies.present? %>
-              <% technologies.each do |technology| %>
-              <tr>
-                <td>
-                  <% if can? :show, :technologies %>
-                  <%= link_to technology.no, technology_path(technology) %></td>
-                    <% else %>
-                  <%=technology.no %>
-                    <% end %>
-                <td><%= technology.name %></td>
-                <td><%= simple_time technology.valid_at %></td>
-                <td><%= technology.user&.name %></td>
-                <td>
 
-                  <% if can? :edit, :technologies %>
-                    <%= link_to  edit_technology_path(technology), class: 'btn btn-success btn-xs', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
-                      <i class="fa fa-edit"></i>编辑
-                    <% end %>
-                  <% end %>
-                  <% if can? :destroy, :technologies %>
-                    <%= link_to technology_path(technology), method: :delete, data: {confirm: '确定删除吗？'}, class: 'btn btn-danger btn-xs' do %>
-                                        <i class="fa fa-close"></i>删除
-                    <% end %>
-                  <% end %>
-                  <% if can? :cytoscape, :home %>
-                    <%= link_to cytoscape_home_index_path(technology_id: technology.id),  class: 'btn btn-primary btn-xs', target: "view_window" do %>
-                      <i class="fa fa-gg"></i>关系图
-                    <% end %>
-                  <% end %>
-                </td>
-
-              </tr>
-            <% end %>
-          <% else %>
-            <tr>
-              <td colspan="5" align="center">没有可显示的内容</td>
-            </tr>
-          <% end %>
-          </tr>
-
-        </table>
+        <table id="demo" class="table table-bordered"></table>
       </div>
+      <script type="text/javascript">
+          var treeTable = $('#demo').bootstrapTreeTable({
+              expandAll : false,                // 是否全部展开
+              expandFirst : false,
+              toolbar: null,//顶部工具条
+              columns: [{
+                  title: '编号',
+                  field: 'no',
+                  width: '20%',
+                  formatter: function (value, row, index) {
+                      if(row.model_name === '零件'){
+                          return "<a href='/instances/" + row.model_id +  "'> " + row.no + "</a>"
+                      }else if(row.model_name === '产品'){
+                          return "<a href='/products/" + row.model_id +  "'> " + row.no + "</a>"
+                      }else{
+                          return "<a href='/technologies/" + row.model_id +  "'> " + row.no + "</a>"
+                      }
+                  }
+              },{
+                  title: '名称',
+                  field: 'name',
+                  width: '20%'
+              },{
+                  title: '类型',
+                  field: 'model_type',
+                  width: '20%'
+              },{
+                  title: '创建人',
+                  field: 'user_name',
+                  width: '20%'
+              },{
+                  title: '操作',
+                  field: 'action',
+                  width: '20%',
+                  formatter: function(value,row, index) {
+                      var actions = [];
+                      if(row.model_type === '工艺文件'){
+                          <% if can? :edit, :technologies %>
+                          actions.push('<a class="btn btn-success btn-xs" data-toggle="modal" data-target="#global-modal" href="/technologies/' + row.model_id + '/edit"> <i class="fa fa-edit"></i>编辑 </a>');
+                          <% end %>
+                          <% if can? :destroy, :technologies %>
+                          actions.push('<a data-confirm="确定删除吗？" style="margin-left:5px;"  class="btn btn-danger btn-xs" rel="nofollow" data-method="delete" href="/technologies/' + row.model_id + '"> <i class="fa fa-close"></i>删除 </a>');
+                          <% end %>
+                      }
+                      return actions.join('');
+                  }
+              }],
+              data: JSON.parse('<%= raw technologies_tree technologies %>')
+          });
+      </script>
       <!-- /.box-body -->
       <div class="box-footer clearfix">
         <div class="pull-right pagination-sm no-margin">

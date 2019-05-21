@@ -1,4 +1,4 @@
-<div class="row" id="product-list">
+<div class="row" id="instance-list">
   <div class="col-md-12">
     <div class="box">
       <%= form_tag instances_path, method: :get do%>
@@ -6,6 +6,9 @@
         <h3 class="box-title">零件列表</h3>
         <% if can? :new, :instances %>
           <small><%= link_to '添加零件', new_instance_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
+        <% end %>
+        <% if can? :import, :products %>
+          <small><%= link_to 'Bom单导入', import_instances_path, 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'font-a label bg-primary' %></small>
         <% end %>
       </div>
       <div class="box-tools">
@@ -26,56 +29,55 @@
       <% end %>
       <!-- /.box-header -->
       <div class="box-body">
-        <table class="table table-bordered">
-          <tr>
-            <th>零件编号</th>
-            <th>零件名</th>
-            <th>零件型号</th>
-            <th>创建人</th>
-            <th></th>
-          </tr>
-          <tr>
-            <% if instances.present? %>
-              <% instances.each do |instance| %>
-              <tr>
-                <td>
-                  <% if can? :show, :instances %>
-                  <%= link_to instance.instance_no, instance_path(instance) %></td>
-                    <% else %>
-                  <%=instance.instance_no %>
-                    <% end %>
-                <td><%= instance.name %></td>
-                <td><%= instance.norms %></td>
-                <td><%= instance.user&.name %></td>
-                <td>
 
-                  <% if can? :edit, :instances %>
-                    <%= link_to  edit_instance_path(instance), class: 'btn btn-success btn-xs', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
-                      <i class="fa fa-edit"></i>编辑
-                    <% end %>
-                  <% end %>
-                  <% if can? :destroy, :instances %>
-                    <%= link_to instance_path(instance), method: :delete, data: {confirm: '确定删除吗？'}, class: 'btn btn-danger btn-xs' do %>
-                                        <i class="fa fa-close"></i>删除
-                    <% end %>
-                  <% end %>
-                  <% if can? :cytoscape, :home %>
-                    <%= link_to cytoscape_home_index_path(instance_id: instance.id),  class: 'btn btn-primary btn-xs', target: "view_window" do %>
-                      <i class="fa fa-gg"></i>关系图
-                    <% end %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          <% else %>
-            <tr>
-              <td colspan="5" align="center">没有可显示的内容</td>
-            </tr>
-          <% end %>
-          </tr>
-
-        </table>
+        <table id="demo" class="table table-bordered"></table>
       </div>
+      <script type="text/javascript">
+          var treeTable = $('#demo').bootstrapTreeTable({
+              expandAll : false,                // 是否全部展开
+              expandFirst : false,
+              toolbar: null,//顶部工具条
+              columns: [{
+                  title: '编号',
+                  field: 'no',
+                  width: '20%',
+                  formatter: function (value, row, index) {
+                     return "<a href='/instances/" + row.model_id +  "'> " + row.no + "</a>"
+                  }
+              },{
+                  title: '名称',
+                  field: 'name',
+                  width: '20%'
+              },{
+                  title: '类型',
+                  field: 'model_type',
+                  width: '10%'
+              },{
+                  title: '型号',
+                  field: 'norms',
+                  width: '20%'
+              },{
+                  title: '创建人',
+                  field: 'user_name',
+                  width: '10%'
+              },{
+                  title: '操作',
+                  field: 'action',
+                  width: '20%',
+                  formatter: function(value,row, index) {
+                      var actions = [];
+                      <% if can? :edit, :instances %>
+                      actions.push('<a class="btn btn-success btn-xs" data-toggle="modal" data-target="#global-modal" href="/instances/' + row.model_id + '/edit"> <i class="fa fa-edit"></i>编辑 </a>');
+                      <% end %>
+                      <% if can? :destroy, :instances %>
+                      actions.push('<a data-confirm="确定删除吗？" style="margin-left:5px;"  class="btn btn-danger btn-xs" rel="nofollow" data-method="delete" href="/instances/' + row.model_id + '"> <i class="fa fa-close"></i>删除 </a>');
+                      <% end %>
+                      return actions.join('');
+                  }
+              }],
+              data: JSON.parse('<%= raw instances_tree instances, 0 %>')
+          });
+      </script>
       <!-- /.box-body -->
       <div class="box-footer clearfix">
         <div class="pull-right pagination-sm no-margin">

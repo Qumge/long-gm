@@ -29,7 +29,7 @@ zh-CN:
         reference_price: '单价'
         unit: '单位'
         brand: '品牌'
-        norms: '产品型号'
+        norms: '型号'
         market_price: '市场价'
         acquisition_price: '集采价'
         freight: '运费'
@@ -44,7 +44,7 @@ zh-CN:
       instance:
         instance_no: '零件编号'
         name: '零件名'
-        norms: '规格尺寸'
+        norms: '型号'
         desc: '备注'
         user_ids: '图纸可见人员'
         technology_id: '工艺文件'

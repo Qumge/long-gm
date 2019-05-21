@@ -1,82 +1,85 @@
 <div class="row" id="product-list">
   <div class="col-md-12">
     <div class="box">
-      <%= form_tag products_path, method: :get do%>
-      <div class="box-header with-border">
-        <h3 class="box-title">产品列表</h3>
-        <% if can? :new, :products %>
-          <small><%= link_to '添加产品', new_product_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
-        <% end %>
-      </div>
-      <div class="box-tools">
-        <div class="input-group input-group-sm">
-          <div class="pull-right">
-            <div class="col-xs-12">
-              <input type="text" name="table_search" class="form-control" placeholder="检索" value="<%= params[:table_search] %>">
+      <%= form_tag products_path, method: :get do %>
+        <div class="box-header with-border">
+          <h3 class="box-title">产品列表</h3>
+          <% if can? :new, :products %>
+            <small><%= link_to '添加产品', new_product_path, class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
+          <% end %>
+        </div>
+        <div class="box-tools">
+          <div class="input-group input-group-sm">
+            <div class="pull-right">
+              <div class="col-xs-12">
+                <input type="text" name="table_search" class="form-control" placeholder="检索" value="<%= params[:table_search] %>">
+              </div>
+            </div>
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
           </div>
-
-          <div class="input-group-btn">
-            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-          </div>
         </div>
-      </div>
 
 
       <% end %>
-      <!-- /.box-header -->
       <div class="box-body">
-        <table class="table table-bordered">
-          <tr>
-            <th>产品编号</th>
-            <th>产品名</th>
-            <th>产品型号</th>
-            <th>创建人</th>
-            <th></th>
-          </tr>
-          <tr>
-            <% if products.present? %>
-              <% products.each do |product| %>
-              <tr>
-                <td>
-                  <% if can? :show, :products %>
-                  <%= link_to product.product_no, product_path(product) %>
-                  <% else %>
-                    <%= product.product_no %>
-                  <% end %>
-                </td>
-                <td><%= product.name %></td>
-                <td><%= product.norms %></td>
-                <td><%= product.user&.name %></td>
-                <td>
 
-                  <% if can? :edit, :products %>
-                    <%= link_to  edit_product_path(product), class: 'btn btn-success btn-xs', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
-                      <i class="fa fa-edit"></i>编辑
-                    <% end %>
-                  <% end %>
-                  <% if can? :destroy, :products %>
-                    <%= link_to product_path(product), method: :delete, data: {confirm: '确定删除吗？'}, class: 'btn btn-danger btn-xs' do %>
-                                        <i class="fa fa-close"></i>删除
-                    <% end %>
-                  <% end %>
-                  <% if can? :cytoscape, :home %>
-                    <%= link_to cytoscape_home_index_path(product_id: product.id),  class: 'btn btn-primary btn-xs', target: "view_window" do %>
-                      <i class="fa fa-gg"></i>关系图
-                    <% end %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          <% else %>
-            <tr>
-              <td colspan="5" align="center">没有可显示的内容</td>
-            </tr>
-          <% end %>
-          </tr>
-
-        </table>
+      <table id="demo" class="table table-bordered"></table>
       </div>
+      <script type="text/javascript">
+          var treeTable = $('#demo').bootstrapTreeTable({
+              expandAll : false,                // 是否全部展开
+              expandFirst : false,
+              toolbar: null,//顶部工具条
+              columns: [{
+                  title: '编号',
+                  field: 'no',
+                  width: '20%',
+                  formatter: function (value, row, index) {
+                      if(row.model_name === '零件'){
+                          return "<a href='/instances/" + row.model_id +  "'> " + row.no + "</a>"
+                      }else{
+                          return "<a href='/products/" + row.model_id +  "'> " + row.no + "</a>"
+                      }
+                  }
+              },{
+                  title: '名称',
+                  field: 'name',
+                  width: '20%'
+              },{
+                  title: '类型',
+                  field: 'model_type',
+                  width: '10%'
+              },{
+                  title: '型号',
+                  field: 'norms',
+                  width: '20%'
+              },{
+                  title: '创建人',
+                  field: 'user_name',
+                  width: '10%'
+              },{
+                  title: '操作',
+                  field: 'action',
+                  width: '20%',
+                  formatter: function(value,row, index) {
+                      var actions = [];
+                      if(row.model_type === '产品'){
+                          <% if can? :edit, :products %>
+                          actions.push('<a class="btn btn-success btn-xs" data-toggle="modal" data-target="#global-modal" href="/products/' + row.model_id + '/edit"> <i class="fa fa-edit"></i>编辑 </a>');
+                          <% end %>
+                          <% if can? :destroy, :products %>
+                          actions.push('<a data-confirm="确定删除吗？" style="margin-left:5px;"  class="btn btn-danger btn-xs" rel="nofollow" data-method="delete" href="/products/' + row.model_id + '"> <i class="fa fa-close"></i>删除 </a>');
+                          <% end %>
+                      }
+                      return actions.join('');
+                  }
+              }],
+              data: JSON.parse('<%= raw products_tree products %>')
+          });
+      </script>
       <!-- /.box-body -->
       <div class="box-footer clearfix">
         <div class="pull-right pagination-sm no-margin">

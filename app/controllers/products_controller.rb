@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy, :show_version, :upload_file, :do_upload_file]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :show_version, :upload_file, :do_upload_file, :import, :do_import]
   before_action :set_uptoken, only: [:upload_file, :edit_file]
   before_action :set_log, only: [:edit_file, :update_file, :apply, :do_apply]
   before_action :set_audit_log, only: [:do_develop_audit, :do_flow_audit, :do_active_audit, :do_failed_audit]
@@ -128,6 +128,7 @@ class ProductsController < ApplicationController
     end
     render js: 'location.reload()'
   end
+
 
   private
 

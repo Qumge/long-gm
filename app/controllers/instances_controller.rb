@@ -129,6 +129,19 @@ class InstancesController < ApplicationController
     render js: 'location.reload()'
   end
 
+  def import
+    render layout: false
+  end
+
+  def do_import
+    begin
+      Import::InstanceImporter.import(params[:file].path, params: {user: current_user}) if params[:file]
+      redirect_to instances_path, notice: '导入成功！'
+    rescue => e
+      redirect_to instances_path, alert: e.message
+    end
+  end
+
   private
 
   def instance_permit

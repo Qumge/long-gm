@@ -115,6 +115,8 @@ Rails.application.routes.draw do
       post :do_flow_audit
       post :do_active_audit
       post :do_failed_audit
+      get :import
+      post :do_import
     end
   end
 
