@@ -22,16 +22,13 @@
         <th>型号</th>
         <td><%= @instance.norms %></td>
       </tr>
-      <tr>
-        <th>备注</th>
-        <td><%= @instance.desc %></td>
-      </tr>
+
       <tr>
         <th>
           图纸
         </th>
         <td>
-          <% if @instance.file_path.present? && current_user.instances.include?(@instance)%>
+          <% if @instance.file_path.present? && current_user.can_view?(@instance)%>
             <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @instance.preview_url%>" data-file-name="<%= @instance.file_name %>">
               <i class="fa fa-eye"></i><%= show_file_name '文件',  @instance %>
             </a>
@@ -42,11 +39,17 @@
             <%= @instance.file_name %>
           <% end %>
         </td>
+      </tr>
+
       <tr>
-        <th>工艺文件</th>
-        <td><%= link_to @instance.technology&.name, technology_path(@instance.technology) if @instance.technology.present? %></td>
+        <th>图纸可见部门</th>
+        <td>
+          <% @instance.organizations.each do |org| %>
+            <span class="label label-primary " style="padding-bottom: 2px;padding-top: 2px;"><%= org.name %></span>
+          <% end %>
+        </td>
       </tr>
-      </tr>
+
 
       </tbody>
     </table>
@@ -71,17 +74,25 @@
         <td><%= simple_time @instance.last_updated_at %></td>
       </tr>
       <% if can? :cytoscape, :home %>
-      <tr>
-        <th>
-          关系图
-        </th>
-        <td>
-            <%= link_to cytoscape_home_index_path(instance_id: @instance.id),  class: 'btn btn-primary btn-xs', target: "view_window" do %>
-              <i class="fa fa-gg"></i>关系图
-            <% end %>
-        </td>
-      </tr>
+<!--      <tr>-->
+<!--        <th>-->
+<!--          关系图-->
+<!--        </th>-->
+<!--        <td>-->
+            <%#= link_to cytoscape_home_index_path(instance_id: @instance.id),  class: 'btn btn-primary btn-xs', target: "view_window" do %>
+<!--              <i class="fa fa-gg"></i>关系图-->
+            <%# end %>
+<!--        </td>-->
+<!--      </tr>-->
       <% end %>
+      <tr>
+        <th>备注</th>
+        <td><%= @instance.desc %></td>
+      </tr>
+      <tr>
+        <th>工艺文件</th>
+        <td><%= link_to @instance.technology&.name, technology_path(@instance.technology) if @instance.technology.present? %></td>
+      </tr>
       <tr>
         <th>图纸可见人员</th>
         <td>

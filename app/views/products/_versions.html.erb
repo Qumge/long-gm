@@ -31,7 +31,7 @@
                   <td><%= version.reify&.file_user&.name %></td>
                   <td>
                     <% if version.reify.file_path.present?  %>
-                      <% if current_user.products.include?(@product) %>
+                      <% if current_user.can_view?(@product) %>
                         <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= version.reify.preview_url%>" data-file-name="<%= version.reify.file_name %>">
                           <i class="fa fa-eye"></i><%= show_file_name '文件',  version.reify %>
                         </a>

@@ -149,6 +149,7 @@ GEM
       kaminari (>= 0.13.0)
       rails
     kaminari-core (1.1.1)
+    left_join (0.2.1)
     loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -323,6 +324,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   kaminari-bootstrap (~> 3.0.1)
+  left_join
   mina (= 0.3.8)
   momentjs-rails (>= 2.9.0)
   mysql2 (~> 0.4.0)

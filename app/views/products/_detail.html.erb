@@ -32,7 +32,7 @@
           图纸
         </th>
         <td>
-          <% if @product.file_path.present? && current_user.products.include?(@product)%>
+          <% if @product.file_path.present? && current_user.can_view?(@product)%>
             <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @product.preview_url%>" data-file-name="<%= @product.file_name %>">
               <i class="fa fa-eye"></i><%= show_file_name '文件',  @product %>
             </a>
@@ -68,6 +68,15 @@
         <td><%= simple_time @product.last_updated_at %></td>
       </tr>
       <tr>
+        <th>图纸可见部门</th>
+        <td>
+          <% @product.organizations.each do |org| %>
+            <span class="label label-primary " style="padding-bottom: 2px;padding-top: 2px;"><%= org.name %></span>
+          <% end %>
+
+        </td>
+      </tr>
+      <tr>
         <th>关联零件</th>
         <td>
           <% @product.instances.each do |instance| %>
@@ -75,18 +84,18 @@
           <% end %>
         </td>
       </tr>
-      <% if can? :cytoscape, :home %>
-        <tr>
-          <th>
-            关系图
-          </th>
-          <td>
-            <%= link_to cytoscape_home_index_path(product_id: @product.id),  class: 'btn btn-primary btn-xs', target: "view_window" do %>
-              <i class="fa fa-gg"></i>关系图
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
+      <%# if can? :cytoscape, :home %>
+<!--        <tr>-->
+<!--          <th>-->
+<!--            关系图-->
+<!--          </th>-->
+<!--          <td>-->
+            <%#= link_to cytoscape_home_index_path(product_id: @product.id),  class: 'btn btn-primary btn-xs', target: "view_window" do %>
+<!--              <i class="fa fa-gg"></i>关系图-->
+            <%# end %>
+<!--          </td>-->
+<!--        </tr>-->
+      <%# end %>
       </tbody>
     </table>
   </div>

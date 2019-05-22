@@ -32,13 +32,7 @@
           <% end %>
         </li>
       <%end %>
-      <% if can? :cytoscape, :home %>
-        <li class="<%= active_class params, 'home', 'cytoscape' %>">
-          <%= link_to cytoscape_home_index_path, target: "view_window" do %>
-            <i class="fa fa-gg"></i> <span>关系图</span>
-          <% end %>
-        </li>
-      <%end %>
+
       <% if can? :index, :products %>
       <li class="<%= active_class params, 'products' %>">
         <%= link_to products_path do %>

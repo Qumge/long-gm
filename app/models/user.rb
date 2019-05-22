@@ -126,6 +126,37 @@ class User < ActiveRecord::Base
     self.user_send_notices users, 'Bom会签通知', content, model
   end
 
+  # 可查看商品
+  def view_products
+    products = self.products
+    if self.organization.present?
+      ids = self.organization.ancestor_ids
+      ids << self.organization.id
+      products = Product.left_join(:organizations, :users).where('organizations.id in (?) or users.id = ?', ids, self.id)
+    end
+    products.uniq
+  end
 
+  # 可见
+  def can_view? model
+    if model.class.name == 'Product'
+      view_products.include? model
+    elsif model.class.name == 'Instance'
+      view_instances.include? model
+    else
+      false
+    end
+  end
+
+  # 可查看零件
+  def view_instances
+    instances = self.instances
+    if self.organization.present?
+      ids = self.organization.ancestor_ids
+      ids << self.organization.id
+      instances = Instance.left_join(:organizations, :users).where('organizations.id in (?) or users.id = ?', ids, self.id)
+    end
+    instances.uniq
+  end
 
 end
