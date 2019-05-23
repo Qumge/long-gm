@@ -100,6 +100,9 @@ GEM
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
+    exception_notification (4.3.0)
+      actionmailer (>= 4.0, < 6)
+      activesupport (>= 4.0, < 6)
     execjs (2.7.0)
     ffi (1.10.0)
     font-awesome-rails (4.7.0.4)
@@ -321,6 +324,7 @@ DEPENDENCIES
   cancancan (~> 2.0)
   coffee-rails (~> 4.1.0)
   devise
+  exception_notification
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
