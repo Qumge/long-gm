@@ -7,8 +7,10 @@ class ApplicationController < ActionController::Base
   before_action :my_notices
 
   def my_notices
-    @unread_notices = current_user.unread_notices
-    @unreply_notices = current_user.unreply_notices
+    if current_user.present?
+      @unread_notices = current_user.unread_notices
+      @unreply_notices = current_user.unreply_notices
+    end
   end
 
 end
