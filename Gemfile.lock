@@ -179,6 +179,7 @@ GEM
       request_store (~> 1.1)
     paranoia (2.4.1)
       activerecord (>= 4.0, < 5.3)
+    puma (3.12.1)
     qiniu (6.9.0)
       mime-types (~> 3.1)
       rest-client (~> 2.0)
@@ -330,6 +331,7 @@ DEPENDENCIES
   mysql2 (~> 0.4.0)
   paper_trail
   paranoia (~> 2.2)
+  puma
   qiniu (>= 6.9.0)
   rails (= 4.2.8)
   rails-assets-admin-lte (~> 2.3.6)!

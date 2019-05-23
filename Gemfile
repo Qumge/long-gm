@@ -66,6 +66,7 @@ gem 'aasm'                                                    # 状态管理
 gem 'bower-rails', '~> 0.10.0'                                # node 包管理
 gem 'select2-rails',                    '4.0.3'
 gem 'left_join'
+gem 'puma'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
