@@ -1,9 +1,11 @@
 class TechnologyLog < ActiveRecord::Base
   include AASM
+  include FileConcern
   belongs_to :user
   belongs_to :technology
   has_many :audits, -> {where(model_type: 'TechnologyLog')}, foreign_key: :model_id
   validates_presence_of :develop_id, :flow_id, :active_id
+  after_save :do_stp2_stl
 
   STATUS = {wait: '草稿', apply: '申请中', develop: '技术已审批', flow: '流程化', active: '申请成功', failed: '申请失败'}
 
@@ -28,9 +30,6 @@ class TechnologyLog < ActiveRecord::Base
     end
   end
 
-  def preview_url
-    Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
-  end
 
   def get_status
     TechnologyLog::STATUS[self.status.to_sym] if self.status.present?

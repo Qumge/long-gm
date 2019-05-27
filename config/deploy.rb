@@ -2,6 +2,7 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/rvm' #服务器上使用的是rvm
+require 'mina_sidekiq/tasks'
 
 set :app_name, 'longsheng-gm'
 #服务器地址,是使用ssh的方式登录服务器
@@ -92,6 +93,7 @@ task :deploy => :environment do
       queue "mkdir -p #{deploy_to}/current/tmp/"
       # queue "chown -R www-data #{deploy_to}"
       #queue "touch #{deploy_to}/current/tmp/restart.txt"
+      invoke :'sidekiq:restart'
       invoke "puma:restart"
     end
   end

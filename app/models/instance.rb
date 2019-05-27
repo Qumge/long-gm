@@ -1,4 +1,5 @@
 class Instance < ActiveRecord::Base
+  include FileConcern
   has_paper_trail versions: {
       scope: -> { order("id desc") }
   }
@@ -23,9 +24,8 @@ class Instance < ActiveRecord::Base
   validates_presence_of :name, :instance_no
   validates_uniqueness_of :name, :instance_no
 
-  def preview_url
-    Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
-  end
+  # after_save :do_stp2_stl
+
 
   def view_logs user
     if user.has_instance_log_resource?

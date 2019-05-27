@@ -22,6 +22,7 @@
 
 
       <% end %>
+
       <!-- /.box-header -->
       <div class="box-body">
         <table class="table table-bordered">
@@ -67,7 +68,7 @@
                     <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= data.preview_url%>" data-file-name="<%= data.file_name %>">
                       <i class="fa fa-eye"></i><%= show_file_name '文件',  data %>
                     </a>
-                    <%= link_to data.preview_url, class: 'btn' do  %>
+                    <%= link_to data.download_url, class: 'btn' do  %>
                       <i class="fa fa-download"></i>
                     <% end %>
                   <% else %>

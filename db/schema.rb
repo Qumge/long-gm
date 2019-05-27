@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190521063238) do
+ActiveRecord::Schema.define(version: 20190527073635) do
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
     t.string   "value",      limit: 255
@@ -54,18 +54,21 @@ ActiveRecord::Schema.define(version: 20190521063238) do
   end
 
   create_table "instance_logs", force: :cascade do |t|
-    t.integer  "instance_id", limit: 4
-    t.string   "file_name",   limit: 255
-    t.string   "file_path",   limit: 255
-    t.integer  "user_id",     limit: 4
-    t.string   "status",      limit: 255
+    t.integer  "instance_id",   limit: 4
+    t.string   "file_name",     limit: 255
+    t.string   "file_path",     limit: 255
+    t.integer  "user_id",       limit: 4
+    t.string   "status",        limit: 255
     t.datetime "active_at"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.datetime "apply_at"
-    t.integer  "develop_id",  limit: 4
-    t.integer  "flow_id",     limit: 4
-    t.integer  "active_id",   limit: 4
+    t.integer  "develop_id",    limit: 4
+    t.integer  "flow_id",       limit: 4
+    t.integer  "active_id",     limit: 4
+    t.boolean  "stl_done",                  default: false
+    t.string   "stl_code",      limit: 255
+    t.datetime "last_stl_time"
   end
 
   create_table "instance_organizations", force: :cascade do |t|
@@ -86,13 +89,16 @@ ActiveRecord::Schema.define(version: 20190521063238) do
     t.integer  "user_id",              limit: 4
     t.integer  "last_user_id",         limit: 4
     t.datetime "last_updated_at"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.integer  "file_user_id",         limit: 4
     t.datetime "active_at"
     t.integer  "technology_id",        limit: 4
     t.string   "ancestry",             limit: 255
     t.integer  "instance_category_id", limit: 4
+    t.boolean  "stl_done",                           default: false
+    t.string   "stl_code",             limit: 255
+    t.datetime "last_stl_time"
   end
 
   add_index "instances", ["ancestry"], name: "index_instances_on_ancestry", using: :btree
@@ -142,18 +148,21 @@ ActiveRecord::Schema.define(version: 20190521063238) do
   add_index "organizations", ["ancestry"], name: "index_organizations_on_ancestry", using: :btree
 
   create_table "product_logs", force: :cascade do |t|
-    t.integer  "product_id", limit: 4
-    t.string   "file_name",  limit: 255
-    t.string   "file_path",  limit: 255
-    t.integer  "user_id",    limit: 4
-    t.string   "status",     limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "product_id",    limit: 4
+    t.string   "file_name",     limit: 255
+    t.string   "file_path",     limit: 255
+    t.integer  "user_id",       limit: 4
+    t.string   "status",        limit: 255
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.datetime "active_at"
     t.datetime "apply_at"
-    t.integer  "develop_id", limit: 4
-    t.integer  "flow_id",    limit: 4
-    t.integer  "active_id",  limit: 4
+    t.integer  "develop_id",    limit: 4
+    t.integer  "flow_id",       limit: 4
+    t.integer  "active_id",     limit: 4
+    t.boolean  "stl_done",                  default: false
+    t.string   "stl_code",      limit: 255
+    t.datetime "last_stl_time"
   end
 
   create_table "product_organizations", force: :cascade do |t|
@@ -174,12 +183,15 @@ ActiveRecord::Schema.define(version: 20190521063238) do
     t.text     "desc",            limit: 65535
     t.integer  "user_id",         limit: 4
     t.integer  "last_user_id",    limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.datetime "last_updated_at"
     t.integer  "file_user_id",    limit: 4
     t.datetime "active_at"
     t.integer  "technology_id",   limit: 4
+    t.boolean  "stl_done",                      default: false
+    t.string   "stl_code",        limit: 255
+    t.datetime "last_stl_time"
   end
 
   create_table "products_instances", force: :cascade do |t|
@@ -219,18 +231,21 @@ ActiveRecord::Schema.define(version: 20190521063238) do
   end
 
   create_table "technologies", force: :cascade do |t|
-    t.integer  "user_id",      limit: 4
-    t.string   "no",           limit: 255
-    t.string   "name",         limit: 255
+    t.integer  "user_id",       limit: 4
+    t.string   "no",            limit: 255
+    t.string   "name",          limit: 255
     t.datetime "valid_at"
-    t.text     "desc",         limit: 65535
-    t.string   "file_name",    limit: 255
-    t.string   "file_path",    limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.integer  "last_user_id", limit: 4
-    t.integer  "file_user_id", limit: 4
+    t.text     "desc",          limit: 65535
+    t.string   "file_name",     limit: 255
+    t.string   "file_path",     limit: 255
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.integer  "last_user_id",  limit: 4
+    t.integer  "file_user_id",  limit: 4
     t.datetime "active_at"
+    t.boolean  "stl_done",                    default: false
+    t.string   "stl_code",      limit: 255
+    t.datetime "last_stl_time"
   end
 
   create_table "technology_instances", force: :cascade do |t|
@@ -249,10 +264,13 @@ ActiveRecord::Schema.define(version: 20190521063238) do
     t.integer  "develop_id",    limit: 4
     t.integer  "flow_id",       limit: 4
     t.integer  "active_id",     limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.datetime "active_at"
     t.datetime "apply_at"
+    t.boolean  "stl_done",                  default: false
+    t.string   "stl_code",      limit: 255
+    t.datetime "last_stl_time"
   end
 
   create_table "user_matters", force: :cascade do |t|

@@ -32,7 +32,7 @@
             <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @instance.preview_url%>" data-file-name="<%= @instance.file_name %>">
               <i class="fa fa-eye"></i><%= show_file_name '文件',  @instance %>
             </a>
-            <%= link_to @instance.preview_url, class: 'btn' do  %>
+            <%= link_to @instance.download_url, class: 'btn' do  %>
               <i class="fa fa-download"></i>
             <% end %>
           <% else %>

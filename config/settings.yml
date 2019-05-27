@@ -2,3 +2,4 @@ per_page: 15
 qiniu:
   access_key: 'O-f_0NVyzXc3B9aOeafM93n3aaWmEgmKmg7DnUmw'
   secret_key: 'xSrgMuPMchXexcwbZCmRp9twjDewofkQ7qLQPrDf'
+step2stl: '~/Downloads/occ-csg-v0.9.5-macos/bin/occ-csg'

@@ -68,10 +68,14 @@ gem 'select2-rails',                    '4.0.3'
 gem 'left_join'
 gem 'puma'
 gem 'exception_notification'
+gem 'sidekiq'
+gem 'redis'
+gem 'redis-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'mina-sidekiq'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'

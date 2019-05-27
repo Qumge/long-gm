@@ -76,9 +76,16 @@ function show_file(e){
         //return;
         $('#file-modal-body').html("<iframe src='//sharecad.org/cadframe/load?url=" + url + "' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>");
     }else{
-        alert('该文件格式暂时不支持在线预览，点击确定后直接下载文件。');
-        location.href = url;
-        return;
+        ext = url.split('.').pop().toLowerCase();
+        if(['stl'].indexOf(ext) >= 0) {
+            $('#file-modal-body').html('<iframe id="viewer" align="middle" width="1024" height="620" src="http://mo3d.mohou.com/mo3d/moview.htm?width=1024&amp;height=620&amp;id=102097&amp;file=' + url + '" frameborder="0" scrolling="no" style=""></iframe>');
+            $('#share').hide();
+        }else{
+            alert('该文件格式暂时不支持在线预览，点击确定后直接下载文件。');
+            location.href = url;
+            return;
+        }
+
     }
     $('#file-modal').modal();
 }

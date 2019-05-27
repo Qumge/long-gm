@@ -1,4 +1,5 @@
 class Matter < ActiveRecord::Base
+  include FileConcern
   has_paper_trail only: [:file_path, :file_name], versions: {
       scope: -> { order("id desc") }
   }
@@ -10,11 +11,7 @@ class Matter < ActiveRecord::Base
   validates_presence_of :name
   has_and_belongs_to_many :users, join_table: 'user_matters'
   has_many :user_matters
-
-
-  def preview_url
-    Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
-  end
+  
 
   def user_matter user
     self.user_matters.where(user: user).first

@@ -18,6 +18,7 @@
 #
 
 class Product < ActiveRecord::Base
+  include FileConcern
   has_paper_trail versions: {
       scope: -> { order("id desc") }
   }
@@ -34,11 +35,8 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :users, join_table: 'products_users'
   validates_uniqueness_of :name, :product_no
 
+  # after_save :do_stp2_stl
 
-
-  def preview_url
-    Rails.application.config.qiniu_domain + '/' + file_path if file_path.present?
-  end
 
   def view_logs user
     if user.has_product_log_resource?
