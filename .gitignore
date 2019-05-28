@@ -9,7 +9,7 @@
 /.idea/*
 /.idea/
 
-#/public/stl/*
+/public/stl/*
 /public/stp
 
 # Ignore the default SQLite database.
