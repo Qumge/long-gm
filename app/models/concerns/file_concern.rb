@@ -24,7 +24,7 @@ module FileConcern
     end
 
     def is_stp?
-      self.file_path.present? &&  ['stp', 'step'].include?(self.file_path.to_s.split('.')[-1])
+      self.file_path.present? &&  ['stp', 'step'].include?((self.file_path.to_s.split('.')[-1]).downcase)
     end
 
     def do_stp2_stl

@@ -29,7 +29,7 @@ task :environment do
 end
 
 # 中括号里的文件 会出现在服务器项目附录的shared文件夹中，这里加入了secrets.yml，环境密钥无需跟开发计算机一样
-set :shared_paths, ['config/database.yml', 'log', 'config/secrets.yml', 'config/puma.rb', 'config/settings/production.yml', 'config/settings.yml']
+set :shared_paths, ['config/database.yml', 'log', 'config/secrets.yml', 'config/puma.rb', 'config/settings/production.yml', 'config/settings.yml', 'config/sidekiq.yml', 'tmp/pids']
 
 # 这个块里面的代码表示运行 mina setup时运行的命令
 task :setup => :environment do
@@ -44,6 +44,8 @@ task :setup => :environment do
 
   queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
   queue! %[touch "#{deploy_to}/#{shared_path}/config/secrets.yml"]
+
+  queue! %[touch "#{deploy_to}/#{shared_path}/config/sidekiq.yml"]
 
   # puma.rb 配置puma必须得文件夹及文件
   queue! %[mkdir -p "#{deploy_to}/shared/tmp/pids"]
@@ -62,6 +64,9 @@ task :setup => :environment do
   # log/puma.stdout.log
   queue! %[touch "#{deploy_to}/shared/log/puma.stdout.log"]
   queue  %[echo "-----> Be sure to edit 'shared/log/puma.stdout.log'."]
+
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/tmp/pids"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/pids"]
 
   # log/puma.stdout.log
   queue! %[touch "#{deploy_to}/shared/log/puma.stderr.log"]
