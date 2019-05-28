@@ -25,7 +25,7 @@ class Step2Stl
 
   #下载文件
   def download_file
-    File.open(@current_path, 'w') {|f|
+    File.open(@current_path, 'w:ASCII-8BIT:utf-8') {|f|
       block = proc { |response|
         response.read_body do |chunk|
           f.write chunk

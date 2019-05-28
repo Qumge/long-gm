@@ -28,6 +28,7 @@ module FileConcern
     end
 
     def do_stp2_stl
+      p self, 111111111
       if self.file_path_changed?
         self.update_columns stl_done: false
         StlJob.perform_later self
