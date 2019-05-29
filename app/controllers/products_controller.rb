@@ -78,7 +78,8 @@ class ProductsController < ApplicationController
 
   def update_file
     @product = @log.product
-    @flag = @log.update_columns file_path: params[:path], file_name: params[:file_name]
+    @log.attributes = {file_path: params[:path], file_name: params[:file_name]}
+    @flag = @log.save validate: false
   end
 
   def do_develop_audit
