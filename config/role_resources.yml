@@ -35,6 +35,8 @@ develop_manager:
     apply: '零件-申请审批'
     do_develop_audit: '零件审批-研发审批'
     do_failed_audit: '零件审批-审批失败'
+    import: '零件-Bom单导入界面'
+    do_import: '零件-Bom单导入'
   technologies:
     index: '工艺文件-列表'
     show: '工艺文件-详情'
@@ -157,6 +159,8 @@ processer:
     do_flow_audit: '零件审批-流程审批'
     do_active_audit: '零件审批-最终审批'
     do_failed_audit: '零件审批-审批失败'
+    import: '零件-Bom单导入界面'
+    do_import: '零件-Bom单导入'
   technologies:
     index: '工艺文件-列表'
     show: '工艺文件-详情'
