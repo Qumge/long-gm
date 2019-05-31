@@ -38,7 +38,7 @@
                   field: 'no',
                   width: '20%',
                   formatter: function (value, row, index) {
-                      if(row.model_name === '零件'){
+                      if(row.model_type === '零件'){
                           return "<a href='/instances/" + row.model_id +  "'> " + row.no + "</a>"
                       }else{
                           return "<a href='/products/" + row.model_id +  "'> " + row.no + "</a>"

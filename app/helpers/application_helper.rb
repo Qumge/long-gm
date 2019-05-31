@@ -55,6 +55,10 @@ module ApplicationHelper
         home: {
             index: '我的文件',
             files_search: '内容搜索'
+        },
+        matters: {
+            index: 'Bom单列表',
+            show: 'Bom单详情'
         }
 
     }
