@@ -11,7 +11,8 @@
 
 /public/stl/*
 /public/stp
-
+#/public/zip/*
+#/public/unzip/*
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal

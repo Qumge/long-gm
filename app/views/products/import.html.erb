@@ -1,0 +1,40 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title" id="myModalLabel">Bom单-批量导入</h4>
+</div>
+<%= form_tag(do_import_products_path, multipart: true) do %>
+  <div class="modal-body">
+    <div class="form-group select required project_company_id">
+      <label class="form-control-label select required" for="develop_id">研发审批 <abbr title="required">*</abbr></label>
+      <%= select_tag :develop_id, options_for_select(current_user.audit_users(:develop, :products).all.collect{|user| [user.name, user.id]}), class: 'select2 form-control select required', width: '100%', style: 'width: 100%' %>
+    </div>
+    <div class="form-group select required project_company_id">
+      <label class="form-control-label select required" for="company_id">流程化审批 <abbr title="required">*</abbr></label>
+      <%= select_tag :flow_id, options_for_select(current_user.audit_users(:flow, :products).all.collect{|user| [user.name, user.id]}), class: 'select2 form-control select required', width: '100%', style: 'width: 100%' %>
+    </div>
+    <div class="form-group select required project_company_id">
+      <label class="form-control-label select required" for="project_company_id">最终审批 <abbr title="required">*</abbr></label>
+      <%= select_tag :active_id, options_for_select(current_user.audit_users(:active, :products).all.collect{|user| [user.name, user.id]}), class: 'select2 form-control select required', width: '100%', style: 'width: 100%' %>
+    </div>
+
+    <div class="form-group select required project_company_id">
+      <label class="form-control-label select required" for="project_company_id">zip文件 <abbr title="required">*</abbr></label>
+      <%= file_field_tag :file, accept: 'application/zip;application/x-zip-compressed' %>
+    </div>
+  </div>
+
+<% end %>
+<div class="modal-footer">
+  <%= submit_tag '保存', class: 'btn btn-primary', data: { disable_with: "处理中..." }, id: 'commit' %>
+  <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+      $('#commit').click(function(){
+        if($('#develop_id').val() && $('#flow_id').val() && $('#active_id').val() && $('#file').val()){
+          $('form').submit();
+        }
+      });
+  });
+</script>

@@ -64,6 +64,23 @@ class Product < ActiveRecord::Base
     def get_model_name
       '产品'
     end
+
+
+    def format_files files, develop_id, flow_id, active_id, user
+      reg = /\((.+?)\)/
+      files.each do |key, value|
+        no = value.match(reg)[1]
+        product = Product.find_by product_no: no
+        if product.present?
+          ProductLog.create file_name: value,file_path: key, product: product, user: user, status: :apply, apply_at: DateTime.now, develop_id: develop_id, flow_id: flow_id, active_id: active_id
+        else
+          instance = Instance.find_by instance_no: no
+          if instance.present?
+            InstanceLog.create file_name: value,file_path: key, instance: instance, user: user, status: :apply, apply_at: DateTime.now, develop_id: develop_id, flow_id: flow_id, active_id: active_id
+          end
+        end
+      end
+    end
   end
 
 end

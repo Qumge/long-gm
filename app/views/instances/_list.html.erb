@@ -7,7 +7,7 @@
         <% if can? :new, :instances %>
           <small><%= link_to '添加零件', new_instance_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
         <% end %>
-        <% if can? :import, :products %>
+        <% if can? :import, :instances %>
           <small><%= link_to 'Bom单导入', import_instances_path, 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'font-a label bg-primary' %></small>
         <% end %>
       </div>

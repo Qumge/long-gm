@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy, :show_version, :upload_file, :do_upload_file, :import, :do_import]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :show_version, :upload_file, :do_upload_file]
   before_action :set_uptoken, only: [:upload_file, :edit_file]
   before_action :set_log, only: [:edit_file, :update_file, :apply, :do_apply]
   before_action :set_audit_log, only: [:do_develop_audit, :do_flow_audit, :do_active_audit, :do_failed_audit]
@@ -47,6 +47,22 @@ class ProductsController < ApplicationController
     @log = ProductLog.new product: @product, file_path: params[:path], file_name: params[:file_name], user: current_user
     @log.save validate: false
     render js: 'location.reload()'
+  end
+
+  def import
+    render layout: false
+  end
+
+  def do_import
+    if params[:develop_id].present? && params[:flow_id].present? && params[:active_id].present? && params[:file].present?
+      File.open("#{Rails.root}/public/zip/#{params[:file].original_filename}", "wb") do |file|
+        file.write params[:file].read
+      end
+      ZipJob.perform_later params[:file].original_filename, params[:develop_id], params[:flow_id], params[:active_id], current_user
+      redirect_to products_path, notice: '上传成功，数据正在处理中。。。'
+    else
+      redirect_to products_path, alert: '数据不完整'
+    end
   end
 
   def show_version

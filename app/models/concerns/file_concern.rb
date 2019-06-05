@@ -18,7 +18,7 @@ module FileConcern
 
     def stp2_stl
        if is_stp?
-        res = Step2Stl.new(file_name: self.file_path).step2_stl
+        res = Step2Stl.new(file_name: self.file_path, bucket: Settings.qiniu_bucket).step2_stl
         self.update_columns stl_code: res, last_stl_time: DateTime.now, stl_done: res == 200
       end
     end

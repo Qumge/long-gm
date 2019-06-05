@@ -7,6 +7,9 @@
           <% if can? :new, :products %>
             <small><%= link_to '添加产品', new_product_path, class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
           <% end %>
+          <% if can? :import, :products %>
+            <small><%= link_to '批量文件上传审核', import_products_path, 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'font-a label bg-primary' %></small>
+          <% end %>
         </div>
         <div class="box-tools">
           <div class="input-group input-group-sm">
