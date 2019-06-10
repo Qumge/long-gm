@@ -3,7 +3,8 @@ class ZipJob < ActiveJob::Base
 
   def perform(zip_name, develop_id, flow_id, active_id, user)
     # Do somethin
-    zip_files = ZipFile.new(zip_name: zip_name, bucket: Settings.qiniu_bucket).unzip
-    Product.format_files zip_files, develop_id, flow_id, active_id, user
+    zip_files = ZipFile.new(zip_name: zip_name).unzip
+    p zip_files, 1111111
+    ZipUploadJob.perform_later zip_files, develop_id, flow_id, active_id, user
   end
 end

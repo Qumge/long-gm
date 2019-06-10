@@ -67,16 +67,31 @@ class Product < ActiveRecord::Base
 
 
     def format_files files, develop_id, flow_id, active_id, user
+      logger = Logger.new 'log/zip_upload.log'
+      logger.info "----start format  #{files}------"
       reg = /\((.+?)\)/
-      files.each do |key, value|
-        no = value.match(reg)[1]
-        product = Product.find_by product_no: no
-        if product.present?
-          ProductLog.create file_name: value,file_path: key, product: product, user: user, status: :apply, apply_at: DateTime.now, develop_id: develop_id, flow_id: flow_id, active_id: active_id
-        else
-          instance = Instance.find_by instance_no: no
-          if instance.present?
-            InstanceLog.create file_name: value,file_path: key, instance: instance, user: user, status: :apply, apply_at: DateTime.now, develop_id: develop_id, flow_id: flow_id, active_id: active_id
+      files.each do |file_name|
+        logger.info "----start upload #{file_name}------"
+        file_path = File.join "public/unzip/", file_name
+        key = "#{SecureRandom.uuid}.#{file_name.split('.').last}"
+        res = QiniuUploader.upload 'longsheng_gm', file_path, key
+        logger.info "---- upload code  #{res}------"
+        logger.info "----end upload #{file_name}------"
+        if res == 200
+          #删除文件
+          File.delete file_path
+          m = file_name.match(reg)
+          if m.present?
+            no = m[1]
+            product = Product.find_by product_no: no
+            if product.present?
+              ProductLog.create file_name: file_name,file_path: key, product: product, user: user, status: :apply, apply_at: DateTime.now, develop_id: develop_id, flow_id: flow_id, active_id: active_id
+            else
+              instance = Instance.find_by instance_no: no
+              if instance.present?
+                InstanceLog.create file_name: file_name,file_path: key, instance: instance, user: user, status: :apply, apply_at: DateTime.now, develop_id: develop_id, flow_id: flow_id, active_id: active_id
+              end
+            end
           end
         end
       end

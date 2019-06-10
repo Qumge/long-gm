@@ -1,7 +1,7 @@
 require 'zip'
 require 'qiniu/upload'
 class ZipFile
-  attr_accessor :zip_name, :zip_path, :bucket
+  attr_accessor :zip_name, :zip_path
 
   #
   #
@@ -9,12 +9,11 @@ class ZipFile
     @zip_name = args[:zip_name]
     @zip_path = "public/zip/#{@zip_name}"
     @input_dir = "public/unzip/"
-    @bucket = args[:bucket]
   end
 
 
   def unzip
-    unzip_files = {}
+    unzip_files = []
     Zip::File.open(@zip_path) do |zip_file|
       # Handle entries one by one
       zip_file.each do |entry|
@@ -24,18 +23,10 @@ class ZipFile
         # 空文件名标识为 文件夹  .开头标识隐藏文件
         next if entry.name.last == '/' || file_name.first == '.'
         begin
-          p entry, 111111111
           logger.info "Extracting #{entry.name}"
           file_path = File.join @input_dir, file_name
           entry.extract file_path
-          logger.info "upload #{file_name}"
-          key = "#{SecureRandom.uuid}.#{file_name.split('.').last}"
-          # res = QiniuUploader.upload @bucket, file_path, key
-          # if res == 200
-          #   #删除文件
-          #   File.delete file_path
-          # end
-          unzip_files[key] = file_name
+          unzip_files << file_name
         rescue => e
           logger.info e.message
         end
