@@ -40,7 +40,7 @@
                 <td><%= simple_time_mini instance_log.updated_at %></td>
                 <td><%= instance_log.get_status %></td>
                 <td>
-                  <% if can? :do_flow_audit, :instances %>
+                  <% if can? :do_active_audit, :instances %>
                     <% if instance_log.may_do_active_audit?   %>
                       <%= link_to 'JavaScript:void(0)', onclick: "active(#{instance_log.id})",class: 'btn btn-xs btn-success' do  %>
                         <i class="fa fa-circle-o"></i>同意

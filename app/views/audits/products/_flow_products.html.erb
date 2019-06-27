@@ -40,7 +40,7 @@
                 <td><%= simple_time_mini product_log.updated_at %></td>
                 <td><%= product_log.get_status %></td>
                 <td>
-                  <% if can? :do_flow_audit, :products %>
+                  <% if can? :do_active_audit, :products %>
                     <% if product_log.may_do_active_audit?  %>
                       <%= link_to 'JavaScript:void(0)', onclick: "active(#{product_log.id})",class: 'btn btn-xs btn-success' do  %>
                         <i class="fa fa-circle-o"></i>同意
